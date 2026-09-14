@@ -481,7 +481,27 @@ export default function Desk() {
             </div>
 
             <div className="grid gap-3 sm:gap-4 lg:grid-cols-2">
-              <Card title="Portfolio delta" sub="Weight-blended betas vs SPY · fee on the proposed leg only" delay={0}>
+              <Card
+                title="AI transmission — number-locked"
+                sub="Qwen narrates; code locks the numbers. Any invented figure refuses the whole response."
+                delay={0}
+              >
+                {explainer ? (
+                  <div>
+                    <div className="mb-3 flex items-center gap-2">
+                      <Badge tone={explainer.source === "llm" ? "green" : "grey"}>
+                        {explainer.source === "llm" ? "Qwen narration · number-locked ✓" : "deterministic template · numbers verified"}
+                      </Badge>
+                    </div>
+                    <p className="text-[14px] leading-6 text-zinc-200">{explainer.prose}</p>
+                    {explainer.refused && <p className="mt-2 font-mono text-[11px] text-amber-300/80">{explainer.refused}</p>}
+                  </div>
+                ) : (
+                  <p className="text-[12px] text-zinc-500">Narrating the deterministic note…</p>
+                )}
+              </Card>
+
+              <Card title="Portfolio delta" sub="Weight-blended betas vs SPY · fee on the proposed leg only" delay={40}>
                 <dl>
                   <KV k="Notional" v={`$${fmtX(result.delta.notionalBefore, 0)} → $${fmtX(result.delta.notionalAfter, 0)}`} mono />
                   <KV k="Beta" v={`${fmtX(result.delta.betaBefore)} → ${fmtX(result.delta.betaAfter)} (${fmtPct(result.delta.betaDelta)})`} mono />
@@ -499,7 +519,7 @@ export default function Desk() {
               <Card
                 title="Weekend read — measured, not guessed"
                 sub={`${result.drift.rSymbol || "rToken"} prints + ${result.stress.weekends} native-proxy Fri→Mon events`}
-                delay={40}
+                delay={80}
               >
                 {measured ? (
                   <div className="space-y-3">
@@ -544,14 +564,14 @@ export default function Desk() {
                 )}
               </Card>
 
-              <Card title="24/7 overlay — see the weekend" sub="Native vs real rToken prints. Green bands are Sat/Sun — the hours only token holders live through." delay={80}>
+              <Card title="24/7 overlay — see the weekend" sub="Native vs real rToken prints. Green bands are Sat/Sun — the hours only token holders live through." delay={120}>
                 <WeekendChart ticker={toNative(symbol)} />
               </Card>
 
               <Card
                 title="What printed while New York slept"
                 sub={`Keyless RSS${result.newsAsOf ? ` · as of ${result.newsAsOf.slice(0, 16).replace("T", " ")} UTC` : ""}${result.newsStale ? " · stale" : ""} · deterministic channel tags`}
-                delay={120}
+                delay={160}
               >
                 {result.headlines.length ? (
                   <ul className="space-y-2">
@@ -586,7 +606,7 @@ export default function Desk() {
                 title="Breaker — kill switch in code"
                 sub="Double costs against the worst historical weekends. A prompt suggestion would argue; code does not."
                 accent={result.breaker.verdict === "FLAG" ? "amber" : "green"}
-                delay={160}
+                delay={200}
               >
                 <div className="flex items-center gap-3">
                   <Badge tone={result.breaker.verdict === "FLAG" ? "amber" : "green"}>{result.breaker.verdict}</Badge>
@@ -599,7 +619,7 @@ export default function Desk() {
                 </ul>
               </Card>
 
-              <Card title="Three ways to express it" sub="Same weekend distribution, three cost shapes. Sorted by left-tail, not hype." delay={200}>
+              <Card title="Three ways to express it" sub="Same weekend distribution, three cost shapes. Sorted by left-tail, not hype." delay={240}>
                 <div className="space-y-2">
                   {[...result.hedges]
                     .sort((a, b) => b.netP10Usdt - a.netP10Usdt)
@@ -632,7 +652,7 @@ export default function Desk() {
                 </div>
               </Card>
 
-              <Card title="Honesty audit" sub={result.audit.subject || "Bailey & López de Prado PSR/DSR/MinTRL. Selection bias priced in."} delay={240}>
+              <Card title="Honesty audit" sub={result.audit.subject || "Bailey & López de Prado PSR/DSR/MinTRL. Selection bias priced in."} delay={280}>
                 <dl>
                   <KV k="Sleeve Sharpe (1y, ann.)" v={fmtX(result.audit.sharpeAnnualized)} mono />
                   <KV k="PSR vs 0" v={`${fmtX(result.audit.psr)} ${result.audit.psr >= 0.95 ? "✓" : "✗"}`} mono />
@@ -650,7 +670,7 @@ export default function Desk() {
                 )}
               </Card>
 
-              <Card title="Critic — the machine’s one lesson" sub="One rule, one hypothesis, regime-tagged. Filed as UNTESTED until Monday." delay={280}>
+              <Card title="Critic — the machine’s one lesson" sub="One rule, one hypothesis, regime-tagged. Filed as UNTESTED until Monday." delay={320}>
                 <p className="text-[14px] font-medium leading-6 text-zinc-100">“{result.rule.rule}”</p>
                 <p className="mt-2 text-[12px] leading-5 text-zinc-500">Hypothesis: {result.rule.hypothesis}</p>
                 <p className="mt-1 font-mono text-[11px] text-zinc-600">
@@ -659,7 +679,7 @@ export default function Desk() {
               </Card>
 
               <div className="lg:col-span-2">
-                <Card title="Preregistered receipt" sub="Written before the outcome. Compare Monday — no moved goalposts." delay={320}>
+                <Card title="Preregistered receipt" sub="Written before the outcome. Compare Monday — no moved goalposts." delay={360}>
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[11px]">
                     <span className="text-zinc-400">{receiptId}</span>
                     <span className="text-zinc-600">hash {hash?.slice(0, 12)}…</span>
