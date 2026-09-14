@@ -1,0 +1,462 @@
+{
+  "kind": "delta",
+  "inputs": {
+    "book": [
+      {
+        "symbol": "rNVDA",
+        "qty": 40
+      },
+      {
+        "symbol": "rAAPL",
+        "qty": 10
+      },
+      {
+        "symbol": "rTSLA",
+        "qty": 5
+      }
+    ],
+    "proposal": {
+      "side": "BUY",
+      "symbol": "RNVDA",
+      "qty": 10
+    },
+    "trials": null
+  },
+  "outputs": {
+    "delta": {
+      "notionalBefore": 13881.499633789062,
+      "notionalAfter": 16064.39956665039,
+      "weightsBefore": {
+        "RNVDA": 0.6290098304790975,
+        "RAAPL": 0.2393617388462058,
+        "RTSLA": 0.1316284306746967
+      },
+      "weightsAfter": {
+        "RNVDA": 0.6794215755791511,
+        "RAAPL": 0.2068362328981549,
+        "RTSLA": 0.113742191522694
+      },
+      "betaBefore": 1.7241479023855901,
+      "betaAfter": 1.742724129992101,
+      "betaDelta": 0.018576227606510898,
+      "hhiBefore": 0.47027345262470566,
+      "hhiAfter": 0.517332190734341,
+      "sectorAfter": {
+        "Semis": 0.6794215755791511,
+        "Devices": 0.2068362328981549,
+        "Auto": 0.113742191522694
+      },
+      "topSector": {
+        "sector": "Semis",
+        "weight": 0.6794215755791511
+      },
+      "maxCorrelation": {
+        "pair": [
+          "NVDA",
+          "TSLA"
+        ],
+        "value": 0.42672488877773534
+      },
+      "feeBps": 5,
+      "feeUsdt": 1.091449966430664,
+      "unknownSymbols": [],
+      "pricesUsed": {
+        "RNVDA": 218.2899932861328,
+        "RAAPL": 332.2699890136719,
+        "RTSLA": 365.44000244140625
+      }
+    },
+    "stress": {
+      "ticker": "NVDA",
+      "weekends": 99,
+      "p10": -2.2434476883192147,
+      "p50": 0.2728577208576046,
+      "p90": 2.0502580823665086,
+      "probDown": 0.40404040404040403,
+      "probBigMove": 0.5656565656565656,
+      "worst": {
+        "friday": "2025-01-24",
+        "monday": "2025-01-27",
+        "gapPct": -12.494736134850811,
+        "mondayDayPct": -5.112183274680326,
+        "proxy": false
+      },
+      "best": {
+        "friday": "2025-05-09",
+        "monday": "2025-05-12",
+        "gapPct": 4.560651200372228,
+        "mondayDayPct": 0.844468942353379,
+        "proxy": false
+      },
+      "analogues": [
+        {
+          "friday": "2025-11-07",
+          "monday": "2025-11-10",
+          "gapPct": 3.6991798775696036,
+          "mondayDayPct": 2.019374931618555,
+          "proxy": false
+        },
+        {
+          "friday": "2025-05-09",
+          "monday": "2025-05-12",
+          "gapPct": 4.560651200372228,
+          "mondayDayPct": 0.844468942353379,
+          "proxy": false
+        },
+        {
+          "friday": "2025-04-04",
+          "monday": "2025-04-07",
+          "gapPct": -7.26327924021551,
+          "mondayDayPct": 11.63960714811293,
+          "proxy": false
+        },
+        {
+          "friday": "2025-03-28",
+          "monday": "2025-03-31",
+          "gapPct": -4.139692706599235,
+          "mondayDayPct": 3.091410715217475,
+          "proxy": false
+        },
+        {
+          "friday": "2025-01-31",
+          "monday": "2025-02-03",
+          "gapPct": -4.430748487004073,
+          "mondayDayPct": 1.664491208809913,
+          "proxy": false
+        },
+        {
+          "friday": "2025-01-24",
+          "monday": "2025-01-27",
+          "gapPct": -12.494736134850811,
+          "mondayDayPct": -5.112183274680326,
+          "proxy": false
+        },
+        {
+          "friday": "2025-01-10",
+          "monday": "2025-01-13",
+          "gapPct": -4.355822242241437,
+          "mondayDayPct": 2.492491805106805,
+          "proxy": false
+        }
+      ],
+      "proxyShare": 0,
+      "spreadAssumptionBps": 80
+    },
+    "drift": {
+      "ticker": "NVDA",
+      "rSymbol": "RNVDAUSDT",
+      "weekendsMeasured": 31,
+      "p10": -1.492262839201614,
+      "p50": 0.4853527474432331,
+      "p90": 3.266686125705392,
+      "probDown": 0.3548387096774194,
+      "maxAbs": 3.669346760262028,
+      "prints": [
+        {
+          "friday": "2026-09-11",
+          "sunday": "2026-09-13",
+          "driftPct": -2.941555180128756,
+          "weekendRangePct": 4.113967398748911
+        },
+        {
+          "friday": "2026-09-04",
+          "sunday": "2026-09-06",
+          "driftPct": 0.4853527474432331,
+          "weekendRangePct": 1.5167273357600972
+        },
+        {
+          "friday": "2026-08-28",
+          "sunday": "2026-08-30",
+          "driftPct": 0.22373407606959003,
+          "weekendRangePct": 2.529564860052049
+        },
+        {
+          "friday": "2026-08-21",
+          "sunday": "2026-08-23",
+          "driftPct": -2.3955431754874636,
+          "weekendRangePct": 5.051067780872793
+        },
+        {
+          "friday": "2026-08-14",
+          "sunday": "2026-08-16",
+          "driftPct": 1.1460045307155922,
+          "weekendRangePct": 1.7412161862035214
+        },
+        {
+          "friday": "2026-08-07",
+          "sunday": "2026-08-09",
+          "driftPct": -1.492262839201614,
+          "weekendRangePct": 3.051805337519624
+        },
+        {
+          "friday": "2026-07-31",
+          "sunday": "2026-08-02",
+          "driftPct": 3.651812120908314,
+          "weekendRangePct": 6.8675121559977885
+        },
+        {
+          "friday": "2026-07-24",
+          "sunday": "2026-07-26",
+          "driftPct": -3.0753384343731516,
+          "weekendRangePct": 8.210712183637439
+        },
+        {
+          "friday": "2026-07-17",
+          "sunday": "2026-07-19",
+          "driftPct": 1.8195302843016101,
+          "weekendRangePct": 3.3226205191594556
+        },
+        {
+          "friday": "2026-07-10",
+          "sunday": "2026-07-12",
+          "driftPct": -1.157799129977531,
+          "weekendRangePct": 3.43372054113485
+        },
+        {
+          "friday": "2026-07-03",
+          "sunday": "2026-07-05",
+          "driftPct": 0.5786562884063885,
+          "weekendRangePct": 1.9356820975010247
+        },
+        {
+          "friday": "2026-06-26",
+          "sunday": "2026-06-28",
+          "driftPct": 1.987381703470032,
+          "weekendRangePct": 3.790746582544694
+        }
+      ],
+      "confidence": "high"
+    },
+    "breaker": {
+      "verdict": "FLAG",
+      "reasons": [
+        "P10 weekend gap -2.24% < −2% — left tail is material.",
+        "Post-trade HHI 0.52 > 0.50 — single-name concentration.",
+        "Worst-regime avg gap -3.49% — breaker at 2× costs objects."
+      ],
+      "drag2xUsdt": 37.109298858642575,
+      "worst10AvgGapPct": -3.489206818995605
+    },
+    "audit": {
+      "observations": 252,
+      "sharpeAnnualized": 0.5491060207118925,
+      "psr": 0.7085882152607353,
+      "nTrials": null,
+      "expectedMaxSharpeAnnualized": null,
+      "dsr": null,
+      "minTrackRecordMonths": 191.99465034814048,
+      "flags": [
+        "SHARPE_NOT_SIGNIFICANT: PSR 0.71 < 0.95 — sample does not establish edge at 95% confidence.",
+        "TRIALS_UNKNOWN: no trial count supplied — selection bias cannot be assessed. DSR withheld.",
+        "TRACK_RECORD_TOO_SHORT: needs ~4032 daily obs for significance; have 252."
+      ],
+      "verdict": "INCONCLUSIVE",
+      "subject": "trailing-1y NVDA sleeve (informational — grades Sharpe-picking, not your trade)",
+      "note": "trials not declared — DSR withheld. Declare how many variants you compared."
+    },
+    "headlines": [
+      {
+        "title": "AI has been carrying the stock market. An industry pause could pull the rug out, warns this Wall Street giant.",
+        "link": "https://www.marketwatch.com/story/ai-has-carried-the-stock-market-an-industry-pause-could-pull-the-rug-out-warns-this-wall-street-giant-3272c960?mod=mw_rss_topstories",
+        "pubDate": "2026-09-14T12:11:00.000Z",
+        "source": "MarketWatch",
+        "tickers": [
+          "SPY"
+        ],
+        "channels": [
+          "GEOPOLITICS"
+        ],
+        "weekendWindow": true
+      },
+      {
+        "title": "Novo drops &#x2018;Nordisk&#x2019; in corporate refresh to take on Lilly in the weight-loss wars",
+        "link": "https://www.marketwatch.com/story/novo-drops-nordisk-in-corporate-refresh-to-take-on-lilly-in-the-weight-loss-wars-a406161a?mod=mw_rss_topstories",
+        "pubDate": "2026-09-14T13:20:00.000Z",
+        "source": "MarketWatch",
+        "tickers": [],
+        "channels": [
+          "GEOPOLITICS"
+        ],
+        "weekendWindow": true
+      },
+      {
+        "title": "China says AI CEOs&apos; call for a slowdown is &apos;fear mongering&apos;",
+        "link": "https://www.cnbc.com/2026/09/14/china-ai-slowdown-us-tech-ceos.html",
+        "pubDate": "2026-09-14T13:18:23.000Z",
+        "source": "CNBC",
+        "tickers": [],
+        "channels": [
+          "TRADE_POLICY"
+        ],
+        "weekendWindow": true
+      },
+      {
+        "title": "Here are our top 10 things to watch in the stock market Monday",
+        "link": "https://www.cnbc.com/2026/09/14/here-are-our-top-10-things-to-watch-in-the-stock-market-monday.html",
+        "pubDate": "2026-09-14T13:14:57.000Z",
+        "source": "CNBC",
+        "tickers": [
+          "SPY"
+        ],
+        "channels": [],
+        "weekendWindow": true
+      },
+      {
+        "title": "10-year Treasury yield nears 5% ahead of Fed rate decision this week",
+        "link": "https://www.cnbc.com/2026/09/14/10-year-us-treasury-is-closing-in-on-5percent.html",
+        "pubDate": "2026-09-14T13:11:41.000Z",
+        "source": "CNBC",
+        "tickers": [],
+        "channels": [
+          "FED_RATES"
+        ],
+        "weekendWindow": true
+      },
+      {
+        "title": "Satellite images show extent of damage to Saudi Arabia’s oil pipeline that bypasses Strait of Hormuz",
+        "link": "https://www.cnbc.com/2026/09/14/iran-war-saudi-arabia-east-west-pipeline-oil.html",
+        "pubDate": "2026-09-14T13:08:13.000Z",
+        "source": "CNBC",
+        "tickers": [],
+        "channels": [
+          "GEOPOLITICS"
+        ],
+        "weekendWindow": true
+      },
+      {
+        "title": "AI stocks tumble on safety warnings. How to proceed — including 2 names on our shopping list",
+        "link": "https://www.cnbc.com/2026/09/14/ai-stocks-tumble-on-safety-warnings-how-to-proceed-including-2-names-on-our-shopping-list.html",
+        "pubDate": "2026-09-14T12:59:41.000Z",
+        "source": "CNBC",
+        "tickers": [],
+        "channels": [
+          "FED_RATES",
+          "GEOPOLITICS"
+        ],
+        "weekendWindow": true
+      },
+      {
+        "title": "Up 3,600%, this freight fund has posted the biggest gains of all on Iran war oil shock",
+        "link": "https://www.cnbc.com/2026/09/13/iran-war-oil-prices-freight-tankers-shipping.html",
+        "pubDate": "2026-09-14T12:39:26.000Z",
+        "source": "CNBC",
+        "tickers": [],
+        "channels": [
+          "GEOPOLITICS"
+        ],
+        "weekendWindow": true
+      }
+    ],
+    "newsAsOf": "2026-09-14T13:30:45.552Z",
+    "newsStale": false,
+    "hedges": [
+      {
+        "id": "full",
+        "name": "Full size now",
+        "description": "Take the whole proposal into the weekend.",
+        "weekendP50Usdt": 5.956211005407602,
+        "weekendP10Usdt": -48.972218082099154,
+        "costUsdt": 18.55464942932129,
+        "couponUsdt": 0,
+        "netP10Usdt": -67.52686751142045,
+        "assumptions": [
+          "weekend spread 80bp one-way",
+          "fee 5bp",
+          "gap distribution from 99 Fri→Mon events"
+        ]
+      },
+      {
+        "id": "half",
+        "name": "Half now, half Monday",
+        "description": "Halve weekend exposure; Monday half pays regular spread.",
+        "weekendP50Usdt": 2.978105502703801,
+        "weekendP10Usdt": -24.486109041049577,
+        "costUsdt": 10.696209671020508,
+        "couponUsdt": 0,
+        "netP10Usdt": -35.182318712070085,
+        "assumptions": [
+          "Monday half pays regular 8bp spread",
+          "no Monday gap surprise on second half (optimistic — flagged)"
+        ]
+      },
+      {
+        "id": "fcn_proxy",
+        "name": "Earn-while-you-wait (FCN-style)",
+        "description": "Illustrative fixed-coupon proxy: accept a below-market strike, earn coupon over the weekend.",
+        "weekendP50Usdt": 0,
+        "weekendP10Usdt": -109.1449966430664,
+        "costUsdt": 0,
+        "couponUsdt": 3.5883286567583474,
+        "netP10Usdt": -105.55666798630806,
+        "assumptions": [
+          "illustrative coupon 20% annualized × 3d — NOT a live Bitget quote",
+          "assignment proxy at −5% strike discount",
+          "non-principal-protected: you can end up holding the dip"
+        ]
+      }
+    ],
+    "rule": {
+      "rule": "Never add to a name already above 50% weight without writing the trim alternative first (post-trade HHI 0.52).",
+      "hypothesis": "Marginal concentration adds left-tail faster than expected return in weekend regimes.",
+      "regime": "all",
+      "triggeredBy": [
+        "concentration",
+        "left-tail",
+        "breaker-flag"
+      ]
+    },
+    "recommendation": "TRIM_OR_WAIT",
+    "hypotheses": [
+      {
+        "id": "h_weekend_drift_signal",
+        "title": "Weekend 24/7 prints as Monday-gap sentiment proxy (not fills)",
+        "status": "CONFIRMED_BULL_ONLY",
+        "regime": "weekend",
+        "evidence": "Indicative prints + ±20% bands + auto-cancel + frozen oracles: usable as gap-direction context with spread filter; not a fill basis.",
+        "date": "2026-09-14",
+        "source": "seed"
+      },
+      {
+        "id": "h_single_name_add_concentrated",
+        "title": "Adding to an already->50% name improves risk-adjusted book",
+        "status": "REJECTED",
+        "regime": "all",
+        "evidence": "HHI/beta math: marginal beta and left-tail dominate. Prefer trim or FCN-at-discount alternative.",
+        "date": "2026-09-14",
+        "source": "seed"
+      },
+      {
+        "id": "c_rcpt_20260914T13525_b9274e",
+        "title": "Never add to a name already above 50% weight without writing the trim alternative first (post-trade HHI 0.52).",
+        "status": "UNTESTED",
+        "regime": "all",
+        "evidence": "triggered by [concentration, left-tail, breaker-flag] on NVDA",
+        "date": "2026-09-14",
+        "source": "critic"
+      },
+      {
+        "id": "c_rcpt_20260914T13544_2f7c8a",
+        "title": "Never add to a name already above 50% weight without writing the trim alternative first (post-trade HHI 0.52).",
+        "status": "UNTESTED",
+        "regime": "all",
+        "evidence": "triggered by [concentration, left-tail, breaker-flag] on NVDA",
+        "date": "2026-09-14",
+        "source": "critic"
+      }
+    ],
+    "narrative": "Adding 10 RNVDA: book beta 1.72 → 1.74, concentration (HHI) 0.52, top sector Semis 68%. Native-proxy history (99 Fri→Mon events): P50 gap +0.27%, P10 -2.24%. Measured in-token weekends (31, high confidence): median drift +0.49%. Breaker: FLAG. Cheapest risk-adjusted expression: Half now, half Monday.",
+    "dataAsOf": "2026-09-14T12:48:20.366Z",
+    "stale": false
+  },
+  "dataSha": "d08fa8063766955b",
+  "confidence": "high",
+  "notes": [
+    "Preregistered expectation: compare Monday outcome vs P50/P10 above. No moved goalposts.",
+    "Costs: 5bp fee/side + 80bp weekend spread assumption. FCN leg illustrative, not a quote."
+  ],
+  "id": "rcpt_20260914T13575_8c30d6",
+  "ts": "2026-09-14T13:57:57.657Z",
+  "prevHash": "f78024da4e14c2fa7dcbbcbfc89757e14a28a88da572c43adcec5cdcc0a263e7",
+  "hash": "6945c5cffc1fef1de7bb54e95a2e520e111a66e465ea87c4963abf3cf1375f36",
+  "methodVersion": "wcp/1.0.0"
+}

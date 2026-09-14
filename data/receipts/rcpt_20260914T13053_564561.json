@@ -1,0 +1,386 @@
+{
+  "kind": "delta",
+  "inputs": {
+    "book": [
+      {
+        "symbol": "rQQQ",
+        "qty": 10
+      },
+      {
+        "symbol": "rMSFT",
+        "qty": 12
+      },
+      {
+        "symbol": "rAMZN",
+        "qty": 20
+      }
+    ],
+    "proposal": {
+      "side": "BUY",
+      "symbol": "rTSLA",
+      "qty": 15
+    },
+    "trials": 5
+  },
+  "outputs": {
+    "delta": {
+      "notionalBefore": 18231.960083007812,
+      "notionalAfter": 23713.560119628906,
+      "weightsBefore": {
+        "RQQQ": 0.3921026601791876,
+        "RMSFT": 0.32621616279957066,
+        "RAMZN": 0.2816811770212418
+      },
+      "weightsAfter": {
+        "RQQQ": 0.3014646477696406,
+        "RMSFT": 0.25080839943854133,
+        "RAMZN": 0.21656807116595467,
+        "RTSLA": 0.2311588816258634
+      },
+      "betaBefore": 1.17080414569114,
+      "betaAfter": 1.4238019034355591,
+      "betaDelta": 0.2529977577444191,
+      "hhiBefore": 0.3395057664793436,
+      "hhiAfter": 0.2541219450868583,
+      "sectorAfter": {
+        "Broad": 0.3014646477696406,
+        "Software": 0.25080839943854133,
+        "Internet": 0.21656807116595467,
+        "Auto": 0.2311588816258634
+      },
+      "topSector": {
+        "sector": "Broad",
+        "weight": 0.3014646477696406
+      },
+      "maxCorrelation": {
+        "pair": [
+          "QQQ",
+          "TSLA"
+        ],
+        "value": 0.6531207505690185
+      },
+      "feeBps": 5,
+      "feeUsdt": 2.740800018310547,
+      "unknownSymbols": [],
+      "pricesUsed": {
+        "RQQQ": 714.8800048828125,
+        "RMSFT": 495.6300048828125,
+        "RAMZN": 256.7799987792969,
+        "RTSLA": 365.44000244140625
+      }
+    },
+    "stress": {
+      "ticker": "TSLA",
+      "weekends": 99,
+      "p10": -2.263167087809107,
+      "p50": 0.10065922668924016,
+      "p90": 2.403894095642561,
+      "probDown": 0.48484848484848486,
+      "probBigMove": 0.6868686868686869,
+      "worst": {
+        "friday": "2025-04-04",
+        "monday": "2025-04-07",
+        "gapPct": -6.536354832402498,
+        "mondayDayPct": 4.249707104617144,
+        "proxy": false
+      },
+      "best": {
+        "friday": "2025-05-09",
+        "monday": "2025-05-12",
+        "gapPct": 7.956138835842324,
+        "mondayDayPct": -1.1211483154910524,
+        "proxy": false
+      },
+      "analogues": [
+        {
+          "friday": "2025-05-16",
+          "monday": "2025-05-19",
+          "gapPct": -3.908801292624047,
+          "mondayDayPct": 1.7216796773975176,
+          "proxy": false
+        },
+        {
+          "friday": "2025-05-09",
+          "monday": "2025-05-12",
+          "gapPct": 7.956138835842324,
+          "mondayDayPct": -1.1211483154910524,
+          "proxy": false
+        },
+        {
+          "friday": "2025-04-04",
+          "monday": "2025-04-07",
+          "gapPct": -6.536354832402498,
+          "mondayDayPct": 4.249707104617144,
+          "proxy": false
+        },
+        {
+          "friday": "2025-03-28",
+          "monday": "2025-03-31",
+          "gapPct": -5.403145852376666,
+          "mondayDayPct": 3.9509069832631325,
+          "proxy": false
+        },
+        {
+          "friday": "2025-03-07",
+          "monday": "2025-03-10",
+          "gapPct": -3.856557514658417,
+          "mondayDayPct": -12.033737307981934,
+          "proxy": false
+        },
+        {
+          "friday": "2025-01-31",
+          "monday": "2025-02-03",
+          "gapPct": -4.429068995898531,
+          "mondayDayPct": -0.7758353307189089,
+          "proxy": false
+        },
+        {
+          "friday": "2024-11-08",
+          "monday": "2024-11-11",
+          "gapPct": 7.807728807968505,
+          "mondayDayPct": 1.068441333368818,
+          "proxy": false
+        }
+      ],
+      "proxyShare": 0,
+      "spreadAssumptionBps": 80
+    },
+    "drift": {
+      "ticker": "TSLA",
+      "rSymbol": "RTSLAUSDT",
+      "weekendsMeasured": 31,
+      "p10": -2.510607773765666,
+      "p50": -0.07609681856762106,
+      "p90": 4.215108963712315,
+      "probDown": 0.5483870967741935,
+      "maxAbs": 5.991533271596782,
+      "prints": [
+        {
+          "friday": "2026-09-11",
+          "sunday": "2026-09-13",
+          "driftPct": -1.7776076136301482,
+          "weekendRangePct": 3.24927528304983
+        },
+        {
+          "friday": "2026-09-04",
+          "sunday": "2026-09-06",
+          "driftPct": -0.1745249824067571,
+          "weekendRangePct": 1.0021111893033083
+        },
+        {
+          "friday": "2026-08-28",
+          "sunday": "2026-08-30",
+          "driftPct": 4.62066991125107,
+          "weekendRangePct": 6.27540795877468
+        },
+        {
+          "friday": "2026-08-21",
+          "sunday": "2026-08-23",
+          "driftPct": -1.3959285417532254,
+          "weekendRangePct": 4.658634538152608
+        },
+        {
+          "friday": "2026-08-14",
+          "sunday": "2026-08-16",
+          "driftPct": -0.07609681856762106,
+          "weekendRangePct": 2.1980273363186673
+        },
+        {
+          "friday": "2026-08-07",
+          "sunday": "2026-08-09",
+          "driftPct": 0.4233125113712217,
+          "weekendRangePct": 4.15731699921159
+        },
+        {
+          "friday": "2026-07-31",
+          "sunday": "2026-08-02",
+          "driftPct": 4.533406600510708,
+          "weekendRangePct": 5.430390794194658
+        },
+        {
+          "friday": "2026-07-24",
+          "sunday": "2026-07-26",
+          "driftPct": -0.8607123358062777,
+          "weekendRangePct": 4.595818479622315
+        },
+        {
+          "friday": "2026-07-17",
+          "sunday": "2026-07-19",
+          "driftPct": -2.2297156001673017,
+          "weekendRangePct": 3.8673672103722336
+        },
+        {
+          "friday": "2026-07-10",
+          "sunday": "2026-07-12",
+          "driftPct": -2.2922275185852965,
+          "weekendRangePct": 5.006298006866058
+        },
+        {
+          "friday": "2026-07-03",
+          "sunday": "2026-07-05",
+          "driftPct": 4.215108963712315,
+          "weekendRangePct": 6.043333836629922
+        },
+        {
+          "friday": "2026-06-26",
+          "sunday": "2026-06-28",
+          "driftPct": 5.991533271596782,
+          "weekendRangePct": 8.231247519513166
+        }
+      ],
+      "confidence": "high"
+    },
+    "breaker": {
+      "verdict": "FLAG",
+      "reasons": [
+        "P10 weekend gap -2.26% < −2% — left tail is material."
+      ],
+      "drag2xUsdt": 93.18720062255859,
+      "worst10AvgGapPct": -1.1957229777356184
+    },
+    "audit": {
+      "observations": 252,
+      "sharpeAnnualized": 0.10367604551223555,
+      "psr": 0.5411392065434558,
+      "nTrials": 5,
+      "expectedMaxSharpeAnnualized": 0.23851880031529646,
+      "dsr": 0.4465594138142402,
+      "minTrackRecordMonths": 5419.052458647128,
+      "flags": [
+        "SHARPE_NOT_SIGNIFICANT: PSR 0.54 < 0.95 — sample does not establish edge at 95% confidence.",
+        "LIKELY_OVERFIT: DSR 0.45 < 0.95 — against 5 trials this edge is not distinguishable from the best expected by chance.",
+        "TRACK_RECORD_TOO_SHORT: needs ~113801 daily obs for significance; have 252."
+      ],
+      "verdict": "LIKELY_OVERFIT",
+      "subject": "trailing-1y TSLA sleeve (informational — grades Sharpe-picking, not your trade)",
+      "note": "A weak sleeve audit is the point: trailing Sharpe can't justify a weekend add. Portfolio delta + measured drift can."
+    },
+    "hedges": [
+      {
+        "id": "full",
+        "name": "Full size now",
+        "description": "Take the whole proposal into the weekend.",
+        "weekendP50Usdt": 5.517736207059898,
+        "weekendP10Usdt": -124.05776791414054,
+        "costUsdt": 46.5936003112793,
+        "couponUsdt": 0,
+        "netP10Usdt": -170.65136822541984,
+        "assumptions": [
+          "weekend spread 80bp one-way",
+          "fee 5bp",
+          "gap distribution from 99 Fri→Mon events"
+        ]
+      },
+      {
+        "id": "half",
+        "name": "Half now, half Monday",
+        "description": "Halve weekend exposure; Monday half pays regular spread.",
+        "weekendP50Usdt": 2.758868103529949,
+        "weekendP10Usdt": -62.02888395707027,
+        "costUsdt": 26.859840179443363,
+        "couponUsdt": 0,
+        "netP10Usdt": -88.88872413651363,
+        "assumptions": [
+          "Monday half pays regular 8bp spread",
+          "no Monday gap surprise on second half (optimistic — flagged)"
+        ]
+      },
+      {
+        "id": "fcn_proxy",
+        "name": "Earn-while-you-wait (FCN-style)",
+        "description": "Illustrative fixed-coupon proxy: accept a below-market strike, earn coupon over the weekend.",
+        "weekendP50Usdt": 0,
+        "weekendP10Usdt": -274.0800018310547,
+        "costUsdt": 0,
+        "couponUsdt": 9.01084937526755,
+        "netP10Usdt": -265.06915245578716,
+        "assumptions": [
+          "illustrative coupon 20% annualized × 3d — NOT a live Bitget quote",
+          "assignment proxy at −5% strike discount",
+          "non-principal-protected: you can end up holding the dip"
+        ]
+      }
+    ],
+    "rule": {
+      "rule": "Require 2×-cost breaker PASS before sizing any TSLA weekend add (current P10 -2.26%, drag $93.19 at 2×).",
+      "hypothesis": "Weekend left-tail survives fees only when explicitly priced at double costs.",
+      "regime": "weekend",
+      "triggeredBy": [
+        "beta-add",
+        "left-tail",
+        "breaker-flag"
+      ]
+    },
+    "recommendation": "TRIM_OR_WAIT",
+    "hypotheses": [
+      {
+        "id": "h_weekend_drift_signal",
+        "title": "Weekend 24/7 prints as Monday-gap sentiment proxy (not fills)",
+        "status": "CONFIRMED_BULL_ONLY",
+        "regime": "weekend",
+        "evidence": "Indicative prints + ±20% bands + auto-cancel + frozen oracles: usable as gap-direction context with spread filter; not a fill basis.",
+        "date": "2026-09-14",
+        "source": "seed"
+      },
+      {
+        "id": "h_single_name_add_concentrated",
+        "title": "Adding to an already->50% name improves risk-adjusted book",
+        "status": "REJECTED",
+        "regime": "all",
+        "evidence": "HHI/beta math: marginal beta and left-tail dominate. Prefer trim or FCN-at-discount alternative.",
+        "date": "2026-09-14",
+        "source": "seed"
+      },
+      {
+        "id": "c_rcpt_20260914T13024_8721a3",
+        "title": "Never add to a name already above 50% weight without writing the trim alternative first (post-trade HHI 0.52).",
+        "status": "UNTESTED",
+        "regime": "all",
+        "evidence": "triggered by [concentration, left-tail, breaker-flag] on NVDA",
+        "date": "2026-09-14",
+        "source": "critic"
+      },
+      {
+        "id": "c_rcpt_20260914T13053_8d82da",
+        "title": "Never add to a name already above 50% weight without writing the trim alternative first (post-trade HHI 0.52).",
+        "status": "UNTESTED",
+        "regime": "all",
+        "evidence": "triggered by [concentration, left-tail, breaker-flag] on NVDA",
+        "date": "2026-09-14",
+        "source": "critic"
+      },
+      {
+        "id": "c_rcpt_20260914T13053_eccf92",
+        "title": "Require 2×-cost breaker PASS before sizing any NVDA weekend add (current P10 -2.24%, drag $37.11 at 2×).",
+        "status": "UNTESTED",
+        "regime": "weekend",
+        "evidence": "triggered by [left-tail, breaker-flag] on NVDA",
+        "date": "2026-09-14",
+        "source": "critic"
+      },
+      {
+        "id": "c_rcpt_20260914T13053_53bd8f",
+        "title": "Never add to a name already above 50% weight without writing the trim alternative first (post-trade HHI 0.57).",
+        "status": "UNTESTED",
+        "regime": "all",
+        "evidence": "triggered by [concentration, left-tail, breaker-flag] on TSLA",
+        "date": "2026-09-14",
+        "source": "critic"
+      }
+    ],
+    "narrative": "Adding 15 RTSLA: book beta 1.17 → 1.42, concentration (HHI) 0.25, top sector Broad 30%. Native-proxy history (99 Fri→Mon events): P50 gap +0.10%, P10 -2.26%. Measured in-token weekends (31, high confidence): median drift -0.08%. Breaker: FLAG. Cheapest risk-adjusted expression: Half now, half Monday.",
+    "dataAsOf": "2026-09-14T12:48:20.366Z",
+    "stale": false
+  },
+  "dataSha": "72cf1f1791e629b3",
+  "confidence": "high",
+  "notes": [
+    "Preregistered expectation: compare Monday outcome vs P50/P10 above. No moved goalposts.",
+    "Costs: 5bp fee/side + 80bp weekend spread assumption. FCN leg illustrative, not a quote."
+  ],
+  "id": "rcpt_20260914T13053_564561",
+  "ts": "2026-09-14T13:05:32.691Z",
+  "prevHash": "1040f39ea1570a866b8a8946f914722986cfe80501acb4233f5fc2b49460a31c",
+  "hash": "763708bde182f1aa8e1eeea10440270e7c394f125af1b16de7b21789e7abea63",
+  "methodVersion": "wcp/1.0.0"
+}

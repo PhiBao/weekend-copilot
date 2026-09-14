@@ -1,0 +1,89 @@
+{
+  "builtAt": "2026-09-14T12:48:20.366Z",
+  "symbols": {
+    "NVDA": {
+      "source": "yahoo-curl+bitget",
+      "bars": 501,
+      "rBars": 200,
+      "sha": "d08fa8063766955b",
+      "fetchedAt": "2026-09-14T12:47:44.645Z"
+    },
+    "AAPL": {
+      "source": "yahoo-curl+bitget",
+      "bars": 501,
+      "rBars": 200,
+      "sha": "4888347c2e9fa62b",
+      "fetchedAt": "2026-09-14T12:47:47.714Z"
+    },
+    "TSLA": {
+      "source": "yahoo-curl+bitget",
+      "bars": 501,
+      "rBars": 200,
+      "sha": "72cf1f1791e629b3",
+      "fetchedAt": "2026-09-14T12:47:50.715Z"
+    },
+    "MSFT": {
+      "source": "yahoo-curl+bitget",
+      "bars": 501,
+      "rBars": 200,
+      "sha": "cc3263135151d826",
+      "fetchedAt": "2026-09-14T12:47:53.850Z"
+    },
+    "META": {
+      "source": "yahoo-curl+bitget",
+      "bars": 501,
+      "rBars": 200,
+      "sha": "8a2bb876b47c446f",
+      "fetchedAt": "2026-09-14T12:47:56.835Z"
+    },
+    "AMZN": {
+      "source": "yahoo-curl+bitget",
+      "bars": 501,
+      "rBars": 200,
+      "sha": "d0cd776f32d845a5",
+      "fetchedAt": "2026-09-14T12:47:59.848Z"
+    },
+    "GOOGL": {
+      "source": "yahoo-curl+bitget",
+      "bars": 501,
+      "rBars": 200,
+      "sha": "1908ae7142912518",
+      "fetchedAt": "2026-09-14T12:48:02.833Z"
+    },
+    "AMD": {
+      "source": "yahoo-curl+bitget",
+      "bars": 501,
+      "rBars": 200,
+      "sha": "7fcc4203166f1cd0",
+      "fetchedAt": "2026-09-14T12:48:05.810Z"
+    },
+    "MU": {
+      "source": "yahoo-curl+bitget",
+      "bars": 501,
+      "rBars": 173,
+      "sha": "639dd856748d42ed",
+      "fetchedAt": "2026-09-14T12:48:08.797Z"
+    },
+    "SPY": {
+      "source": "yahoo-curl+bitget",
+      "bars": 501,
+      "rBars": 200,
+      "sha": "8880f3680b1aa6a0",
+      "fetchedAt": "2026-09-14T12:48:11.882Z"
+    },
+    "QQQ": {
+      "source": "yahoo-curl+bitget",
+      "bars": 501,
+      "rBars": 200,
+      "sha": "34d121b69a6d0084",
+      "fetchedAt": "2026-09-14T12:48:14.874Z"
+    },
+    "BTC": {
+      "source": "yahoo-curl+bitget",
+      "bars": 731,
+      "rBars": 200,
+      "sha": "24f11677fce1f9fb",
+      "fetchedAt": "2026-09-14T12:48:17.864Z"
+    }
+  }
+}
