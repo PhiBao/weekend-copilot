@@ -127,6 +127,7 @@ export interface DeskResult {
   headlines: HeadlineView[];
   newsAsOf: string | null;
   newsStale: boolean;
+  newsOrigin: "live" | "snapshot" | "empty";
   rule: CriticView;
   recommendation: "TRIM_OR_WAIT" | "PROCEED_WITH_LIMITS";
   hypotheses: HypothesisView[];

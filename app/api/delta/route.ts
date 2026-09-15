@@ -109,7 +109,7 @@ export async function POST(req: Request) {
   const headlines = relevantHeadlines(news.headlines, native, 8);
   const outputs = {
     delta, stress, drift, breaker, audit: auditView,
-    headlines, newsAsOf: news.fetchedAt, newsStale: news.stale,
+    headlines, newsAsOf: news.fetchedAt, newsStale: news.stale, newsOrigin: news.origin,
     hedges, rule, recommendation,
     hypotheses: relevantHypotheses(native),
     narrative: narrate({

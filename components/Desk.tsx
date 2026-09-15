@@ -570,7 +570,9 @@ export default function Desk() {
 
               <Card
                 title="What printed while New York slept"
-                sub={`Keyless RSS${result.newsAsOf ? ` · as of ${result.newsAsOf.slice(0, 16).replace("T", " ")} UTC` : ""}${result.newsStale ? " · stale" : ""} · deterministic channel tags`}
+                sub={`Keyless RSS · ${result.newsOrigin === "live" ? "live fetch, 30-min cache" : result.newsOrigin === "snapshot" ? "committed snapshot (feed fallback)" : "no source reachable"}${
+                  result.newsAsOf ? ` · as of ${result.newsAsOf.slice(0, 16).replace("T", " ")} UTC` : ""
+                }${result.newsStale ? " · stale" : ""} · deterministic channel tags`}
                 delay={160}
               >
                 {result.headlines.length ? (
