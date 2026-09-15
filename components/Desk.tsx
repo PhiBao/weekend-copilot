@@ -32,7 +32,7 @@ export default function Desk() {
   const [result, setResult] = useState<DeskResult | null>(null);
   const [verify, setVerify] = useState<VerifyState | null>(null);
   const [graveyard, setGraveyard] = useState<HypothesisView[]>([]);
-  const [compareVerdict, setCompareVerdict] = useState<{ book: string; recommendation: string } | null>(null);
+  const [compareVerdict, setCompareVerdict] = useState<{ from: string; book: string; recommendation: string } | null>(null);
   const [comparing, setComparing] = useState(false);
   const [explainer, setExplainer] = useState<{ prose: string; source: string; refused?: string } | null>(null);
   const [saved, setSaved] = useState<{ name: string; book: BookLine[] }[]>([]);
@@ -110,21 +110,20 @@ export default function Desk() {
     [book, side, symbol, qty, trials]
   );
 
+  /**
+   * Switch the desk to the other preset book and re-grade the SAME trade.
+   * The big verdict must change — a comparison the eye can't see is not a demo.
+   */
   const compareOpposite = async () => {
+    const current = PRESETS.find((p) => p.id === presetId);
     const other = PRESETS.find((p) => p.id !== presetId) ?? PRESETS[1];
     setComparing(true);
+    setCompareVerdict(null);
     try {
-      const res = await fetch("/api/delta", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          book: other.book,
-          proposal: { side, symbol: symbol.toUpperCase(), qty: Number(qty) },
-          trials: trials === "" ? undefined : Number(trials),
-        }),
-      });
-      const j = (await res.json()) as DeltaResponse;
-      if (j.ok && j.result) setCompareVerdict({ book: other.name, recommendation: j.result.recommendation });
+      setPresetId(other.id);
+      setBook(other.book.map((b) => ({ ...b })));
+      const r = await analyze(other.book);
+      if (r) setCompareVerdict({ from: current?.name ?? "your book", book: other.name, recommendation: r.recommendation });
     } finally {
       setComparing(false);
     }
@@ -462,9 +461,10 @@ export default function Desk() {
                 </a>
               </div>
               {compareVerdict && (
-                <p className="mt-3 text-[12px] text-zinc-400">
-                  <span className="text-zinc-200">{compareVerdict.book}</span> →{" "}
-                  <span className={compareVerdict.recommendation === "TRIM_OR_WAIT" ? "text-amber-300" : "text-emerald-300"}>
+                <p className="mt-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-[12px] text-zinc-400">
+                  Switched book: <span className="text-zinc-200">{compareVerdict.from}</span> →{" "}
+                  <span className="text-zinc-200">{compareVerdict.book}</span> · same trade re-graded →{" "}
+                  <span className={`font-semibold ${compareVerdict.recommendation === "TRIM_OR_WAIT" ? "text-amber-300" : "text-emerald-300"}`}>
                     {compareVerdict.recommendation.replace(/_/g, " ")}
                   </span>{" "}
                   · same signal, opposite advice. That is the product.
