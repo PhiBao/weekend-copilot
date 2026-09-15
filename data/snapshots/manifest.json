@@ -1,89 +1,101 @@
 {
-  "builtAt": "2026-09-15T13:53:28.332Z",
+  "builtAt": "2026-09-15T13:55:48.520Z",
   "symbols": {
     "NVDA": {
       "source": "yahoo-curl+bitget",
       "bars": 501,
       "rBars": 200,
-      "sha": "9884484b81de1128",
-      "fetchedAt": "2026-09-15T13:52:50.627Z"
+      "sha": "b76a2dcaf41ebfa0",
+      "fetchedAt": "2026-09-15T13:55:13.143Z",
+      "rFetchedAt": "2026-09-15T13:55:13.143Z"
     },
     "AAPL": {
       "source": "yahoo-curl+bitget",
       "bars": 501,
       "rBars": 200,
-      "sha": "6d8be675ca3c06e1",
-      "fetchedAt": "2026-09-15T13:52:53.626Z"
+      "sha": "32162f8cab0dafe5",
+      "fetchedAt": "2026-09-15T13:55:15.987Z",
+      "rFetchedAt": "2026-09-15T13:55:15.987Z"
     },
     "TSLA": {
       "source": "yahoo-curl+bitget",
       "bars": 501,
       "rBars": 200,
-      "sha": "6f6e6b97df84f9e0",
-      "fetchedAt": "2026-09-15T13:52:56.530Z"
+      "sha": "03499b556b9bf257",
+      "fetchedAt": "2026-09-15T13:55:18.837Z",
+      "rFetchedAt": "2026-09-15T13:55:18.837Z"
     },
     "MSFT": {
       "source": "yahoo-curl+bitget",
       "bars": 501,
       "rBars": 200,
-      "sha": "5df0156721f31824",
-      "fetchedAt": "2026-09-15T13:52:59.462Z"
+      "sha": "fdc9abd0d1b0972a",
+      "fetchedAt": "2026-09-15T13:55:21.710Z",
+      "rFetchedAt": "2026-09-15T13:55:21.710Z"
     },
     "META": {
       "source": "yahoo-curl+bitget",
       "bars": 501,
       "rBars": 200,
-      "sha": "66339c7c92c9725e",
-      "fetchedAt": "2026-09-15T13:53:02.660Z"
+      "sha": "139d000790b4bcb7",
+      "fetchedAt": "2026-09-15T13:55:25.621Z",
+      "rFetchedAt": "2026-09-15T13:55:25.621Z"
     },
     "AMZN": {
       "source": "yahoo-curl+bitget",
       "bars": 501,
       "rBars": 200,
-      "sha": "237269b1e06a8ea6",
-      "fetchedAt": "2026-09-15T13:53:06.365Z"
+      "sha": "f90d0ac42f583281",
+      "fetchedAt": "2026-09-15T13:55:28.436Z",
+      "rFetchedAt": "2026-09-15T13:55:28.436Z"
     },
     "GOOGL": {
       "source": "yahoo-curl+bitget",
       "bars": 501,
       "rBars": 200,
-      "sha": "be3c6ba8ad9ca40b",
-      "fetchedAt": "2026-09-15T13:53:09.358Z"
+      "sha": "03f59ba44f837177",
+      "fetchedAt": "2026-09-15T13:55:31.252Z",
+      "rFetchedAt": "2026-09-15T13:55:31.252Z"
     },
     "AMD": {
       "source": "yahoo-curl+bitget",
       "bars": 501,
       "rBars": 200,
-      "sha": "35267ef9b679f321",
-      "fetchedAt": "2026-09-15T13:53:12.570Z"
+      "sha": "41b8e493a2f8f0fb",
+      "fetchedAt": "2026-09-15T13:55:34.061Z",
+      "rFetchedAt": "2026-09-15T13:55:34.061Z"
     },
     "MU": {
       "source": "yahoo-curl+bitget",
       "bars": 501,
       "rBars": 174,
-      "sha": "4c0914a879ab12fd",
-      "fetchedAt": "2026-09-15T13:53:15.814Z"
+      "sha": "bdf30471ca716ca7",
+      "fetchedAt": "2026-09-15T13:55:36.906Z",
+      "rFetchedAt": "2026-09-15T13:55:36.906Z"
     },
     "SPY": {
       "source": "yahoo-curl+bitget",
       "bars": 501,
       "rBars": 200,
-      "sha": "8773cd60c4bde288",
-      "fetchedAt": "2026-09-15T13:53:18.786Z"
+      "sha": "601f596eddd674fe",
+      "fetchedAt": "2026-09-15T13:55:39.746Z",
+      "rFetchedAt": "2026-09-15T13:55:39.746Z"
     },
     "QQQ": {
       "source": "yahoo-curl+bitget",
       "bars": 501,
       "rBars": 200,
-      "sha": "8bd1413dbed5b6be",
-      "fetchedAt": "2026-09-15T13:53:22.845Z"
+      "sha": "5bdfcbdc3d015a00",
+      "fetchedAt": "2026-09-15T13:55:42.704Z",
+      "rFetchedAt": "2026-09-15T13:55:42.704Z"
     },
     "BTC": {
       "source": "yahoo-curl+bitget",
       "bars": 731,
       "rBars": 200,
-      "sha": "a41ea4efdcf7918d",
-      "fetchedAt": "2026-09-15T13:53:25.828Z"
+      "sha": "08041c8fb21a5bca",
+      "fetchedAt": "2026-09-15T13:55:46.017Z",
+      "rFetchedAt": "2026-09-15T13:55:46.017Z"
     }
   }
 }
