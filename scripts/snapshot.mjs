@@ -70,7 +70,17 @@ function yahooDaily(native) {
   return bars;
 }
 
-const manifest = {};
+// Merge with the previous manifest: a symbol that fails to refresh on this run
+// keeps its last good entry instead of vanishing (CI runners get throttled).
+let manifest = {};
+try {
+  const { readFile: rf } = await import("node:fs/promises");
+  const prev = JSON.parse(await rf(join(dir, "manifest.json"), "utf8"));
+  manifest = prev.symbols ?? {};
+  console.log(`merged previous manifest (${Object.keys(manifest).length} symbols)`);
+} catch {
+  console.log("no previous manifest — starting fresh");
+}
 await mkdir(dir, { recursive: true });
 
 for (const sym of UNIVERSE) {
@@ -110,6 +120,7 @@ for (const sym of UNIVERSE) {
       rBars: rBars.length,
       sha: sha(payload),
       fetchedAt,
+      ...(rBars.length >= 5 ? { rFetchedAt: fetchedAt } : {}),
     };
     console.log(`ok ${sym}: native ${nBars.length} + rToken ${rBars.length}`);
   } else {
@@ -119,4 +130,15 @@ for (const sym of UNIVERSE) {
 }
 
 await writeFile(join(dir, "manifest.json"), JSON.stringify({ builtAt: new Date().toISOString(), symbols: manifest }, null, 2));
-console.log("manifest written");
+const total = Object.keys(manifest).length;
+const within = (t) => t && Date.now() - new Date(t).getTime() < 6 * 3600 * 1000;
+const freshNative = UNIVERSE.filter((s) => manifest[s] && within(manifest[s].fetchedAt)).length;
+const freshRtoken = UNIVERSE.filter((s) => manifest[s] && within(manifest[s].rFetchedAt)).length;
+console.log(`manifest written: ${total} symbols total | native refreshed ${freshNative}/${UNIVERSE.length} | rToken refreshed ${freshRtoken}/${UNIVERSE.length}`);
+if (freshNative + freshRtoken === 0) {
+  console.error("nothing refreshed — every feed refused this run");
+  process.exit(1);
+}
+if (freshNative === 0) {
+  console.warn("native leg refused everywhere (likely datacenter throttling) — rToken leg still refreshed; keeping previous native bars");
+}

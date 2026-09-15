@@ -1,0 +1,105 @@
+name: Refresh market data
+
+# Keeps the committed snapshots alive during the judging window.
+# Headlines already refresh live at runtime (no job needed); this refreshes
+# PRICES, the rToken 24/7 weekend bars, and the news fallback snapshot.
+#
+# Auto-deploy happens when either:
+#   (a) the Vercel GitHub App is installed on this repo and the project is
+#       linked (Vercel → Project → Settings → Git → Connect), or
+#   (b) repo secrets VERCEL_TOKEN (+ VERCEL_ORG_ID / VERCEL_PROJECT_ID) exist.
+# Without either, the job still refreshes the repo and reports it in the summary.
+
+on:
+  schedule:
+    - cron: "17 6 * * 1" # Mondays 06:17 UTC, after Friday's close settles
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Refresh price snapshots (Bitget rToken 24/7 + native history)
+        run: pnpm snapshot
+
+      - name: Refresh news fallback snapshot
+        run: pnpm news
+
+      - name: Verify snapshot integrity + determinism
+        run: pnpm verify
+
+      - name: Run unit tests
+        run: pnpm test
+
+      - name: Commit refreshed data
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- data/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No data change this run."
+          else
+            git add data/
+            git commit -m "chore(data): weekly snapshot refresh"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Committed refreshed data."
+          fi
+
+      - name: Check deploy credentials
+        id: creds
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ -n "$VERCEL_TOKEN" ]; then
+            echo "have=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "have=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Deploy to Vercel
+        if: steps.commit.outputs.changed == 'true' && steps.creds.outputs.have == 'true'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: npx --yes vercel@latest --prod --yes --token "$VERCEL_TOKEN"
+
+      - name: Deploy notice
+        if: steps.commit.outputs.changed == 'true' && steps.creds.outputs.have != 'true'
+        run: |
+          echo "::notice::Data committed. Vercel picks it up automatically when the Git integration is connected; otherwise add VERCEL_TOKEN, VERCEL_ORG_ID and VERCEL_PROJECT_ID repo secrets to enable the deploy step."
+
+      - name: Summary
+        if: always()
+        run: |
+          FRESH=$(node -e "const m=require('./data/snapshots/manifest.json');const f=Object.values(m.symbols).filter(s=>Date.now()-new Date(s.fetchedAt).getTime()<6*3600*1000).length;const r=Object.values(m.symbols).filter(s=>s.rFetchedAt&&Date.now()-new Date(s.rFetchedAt).getTime()<6*3600*1000).length;console.log('native '+f+'/'+Object.keys(m.symbols).length+', rToken '+r+'/'+Object.keys(m.symbols).length)")
+          {
+            echo "### Weekly data refresh"
+            echo ""
+            echo "- data changed: ${{ steps.commit.outputs.changed }}"
+            echo "- deploy credentials present: ${{ steps.creds.outputs.have }}"
+            echo "- freshness: $FRESH"
+            echo "- verify: pnpm verify (snapshot integrity, determinism, weekend events)"
+          } >> "$GITHUB_STEP_SUMMARY"
