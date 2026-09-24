@@ -41,44 +41,146 @@ Tokenized US stocks (rTokens) made prices 24/7. They did not make *wisdom* 24/7.
 
 ## Architecture
 
+### The one principle
+
+AI lives at the edges, determinism in the core. Two narrow AI gates, both mechanically constrained:
+Jev may only return **typed judgments from a closed set** (never prose, never numbers); Qwen may only
+**rephrase locked numbers** (never invent them). Everything between input and output is pure functions
+over committed data. Either key missing, either vendor down — the desk still grades, because the
+fallbacks are the original deterministic paths, not error pages.
+
+```mermaid
+flowchart TB
+    subgraph Client["Client — Next.js App Router"]
+        Desk["Desk.tsx<br/>book editor · NL box · graded cards"]
+    end
+    subgraph InEdge["Input edge — understanding"]
+        Dispatch["POST /api/dispatch"]
+        Regex["lib/nl.ts<br/>regex fast path · 0 ms"]
+        Jev(["TypeSafe Jev<br/>action + symbol + confidence"])
+    end
+    subgraph Core["Core — deterministic grading"]
+        Delta["POST /api/delta"]
+        Math["delta · stress · weekend drift<br/>breaker · audit · hedges · critic · policy"]
+        Receipts["receipts.ts<br/>hash-chained preregistration"]
+        Grave["graveyard.ts<br/>UNTESTED hypotheses"]
+    end
+    subgraph OutEdge["Output edge — narration"]
+        Explain["POST /api/explain"]
+        Lock["numberlock.ts<br/>refuse invented decimals"]
+        Qwen(["Qwen qwen3.8-max<br/>4 sentences · temp 0"])
+        Tmpl["deterministic template<br/>labeled fallback"]
+    end
+    subgraph Data["Data — pinned and keyless"]
+        Snap["snapshots + manifest SHAs<br/>12 symbols · committed"]
+        Live["live RSS · Bitget tickers<br/>30-min / 60-s caches"]
+        GH["weekly GitHub Action<br/>refresh · verify · commit"]
+    end
+    subgraph Proof["Proof — always inspectable"]
+        Verify["GET /api/verify<br/>7 checks"]
+        RVerify["POST /api/receipt/verify<br/>stateless + tamper demo"]
+        Log["data/paper_log.csv<br/>decisions + receipt hashes"]
+    end
+    Desk --> Dispatch
+    Dispatch --> Regex
+    Dispatch --> Jev
+    Regex --> Delta
+    Jev --> Delta
+    Delta --> Math
+    Math --> Receipts
+    Receipts --> Grave
+    Delta --> Desk
+    Desk --> Explain
+    Explain --> Lock
+    Lock --> Qwen
+    Lock --> Tmpl
+    Qwen --> Desk
+    Tmpl --> Desk
+    Snap --> Delta
+    Live --> Delta
+    GH --> Snap
+    Receipts --> Verify
+    Receipts --> RVerify
+    Receipts --> Log
+    classDef ai fill:#1c1917,stroke:#f59e0b,stroke-dasharray:5 5,color:#fcd34d;
+    classDef pure fill:#022c22,stroke:#34d399,color:#a7f3d0;
+    classDef io fill:#111827,stroke:#6b7280,color:#e5e7eb;
+    class Jev,Qwen ai;
+    class Math,Receipts,Lock pure;
+    class Desk,Dispatch,Delta,Explain,Snap,Live,GH,Verify,RVerify,Log,Regex,Grave,Tmpl io;
 ```
-app/page.tsx → components/Desk.tsx        LUI: NL box + book → graded cards (all deterministic math)
-│
-├── POST /api/delta      {book, proposal, trials?} → delta + stress + drift + headlines + breaker
-│                                                    + audit + hedges + critic rule + receipt
-├── POST /api/dispatch   {text, book} → regex fast path, else Jev intent + symbol + confidence
-│                                                    → proposal, targeted question, or today's hint (never throws)
-├── POST /api/explain    {receipt} → number-locked Qwen prose, or deterministic template (labeled)
-├── GET  /api/series     ?ticker= → trimmed native + rToken bars (24/7 weekend overlay chart)
-├── GET  /api/tickers    → live Bitget rToken snapshot strip (60s cache)
-├── GET  /api/analogues  ?ticker= → Fri→Mon gap table
-├── POST /api/receipt/verify {receipt} → stateless integrity check + tamper demo
-├── GET  /api/verify     → 7-check suite (also offline: `pnpm verify`)
-└── GET  /api/graveyard  → persistent hypothesis graph
 
-lib/risk-engine/
-├── delta.ts       portfolio math (beta, HHI, sector, correlation, fees) — pure functions
-├── stress.ts      Fri→Mon gap extraction, weekend percentiles, breaker at 2× costs
-├── weekend.ts     true in-token Fri→Sun drift from rToken prints (confidence-graded)
-├── hedge.ts       three-way expression compare with explicit assumptions
-├── critic.ts      deterministic one-rule-per-decision generator
-├── graveyard.ts   persistent negative memory, regime-tagged
-├── receipts.ts    hash-chained preregistration + stateless verification
-├── numberlock.ts  LLM output validator (any invented decimal refuses the response)
-└── audit.ts       PSR / DSR / MinTRL (Bailey & López de Prado)
+Dashed amber nodes are the only places a model runs. Everything emerald is pure code. If you
+removed every AI call, the desk would still grade — less fluently, but honestly.
 
-lib/market/
-├── fetch.ts       keyless fetchers (Yahoo chart via curl path, Bitget public candles)
-├── snapshots.ts   pinned snapshot loader (demo reliability) + live fallback
-├── news.ts        RSS parser, HTML-entity decoder, transmission-channel tagger
-└── newsloader.ts  runtime headline cache
+### One graded trade, end to end
 
-lib/nl.ts          deterministic plain-English proposal parser
-data/
-├── snapshots/     12 symbols × (native 2y + rToken 24/7) + manifest SHAs  ← pinned, committed
-├── news_raw.json  RSS snapshot (CNBC/MarketWatch), tagged at runtime
-└── paper_log.csv  4 canonical decisions with receipt hashes (verifiable usage record)
+```mermaid
+sequenceDiagram
+    autonumber
+    participant T as Trader
+    participant UI as Desk UI
+    participant D as /api/dispatch
+    participant J as Jev
+    participant G as /api/delta
+    participant E as /api/explain
+    participant Q as Qwen
+    T->>UI: is Tesla safe to hold through the weekend
+    UI->>D: POST text + book
+    D->>D: regex fast path misses
+    D->>J: action + symbol Choice
+    J-->>D: hold_check 0.90, TSLA 0.95
+    D->>D: validate, scope probe to RTSLA
+    D-->>UI: proposal + interpretation chip
+    UI->>G: POST book + proposal
+    G->>G: delta, stress, drift, breaker, audit, hedges, critic
+    G->>G: preregister hash-chained receipt
+    G-->>UI: verdict + cards + receipt
+    UI->>E: POST receipt
+    E->>E: verify hash, check narration cache
+    E->>Q: narrate, 4 sentences, temp 0
+    Q-->>E: prose
+    E->>E: number-lock every decimal
+    E-->>UI: narration card
 ```
+
+### Request lifecycle (matches the code, in order)
+
+**`POST /api/dispatch`** — `parseProposal` fast path first (exact inputs never touch the network);
+else Jev `action` + `symbol` Choice (6s timeout, key server-side); `composeDispatch` validates
+against the allowlist, extracts quantities with the same regex rules, scopes hold probes to the
+named line, and returns a proposal, one targeted clarifying question, or today's hint. Never throws.
+
+**`POST /api/delta`** — `loadSnapshots` → `computeDelta` → `stressTicker` → `weekendDrifts` →
+`breakerCheck` → `auditBacktest` (honesty sleeve) → `compareHedges` → `criticize` → recommendation
+policy (BUY trims only on hard concentration, or breaker FLAG plus material risk-add) →
+`loadHeadlines` → `relevantHeadlines` → deterministic `narrate` → `createReceipt` (preregistered,
+hash-chained) → `recordHypothesis` as UNTESTED → respond with receipt + outputs.
+
+**`POST /api/explain`** — `verifyReceipt` (refuse forged input) → narration-cache lookup keyed on
+the analysis signature → Qwen via `node:https` (22s + one retry, top-level `enable_thinking: false`)
+→ `numbersLocked` (any invented decimal refuses the whole response) → cache, else the labeled
+deterministic template.
+
+### Data strategy: pinned truth, live edges
+
+| Layer | Source | Freshness | If it fails |
+|---|---|---|---|
+| Price history + rToken 24/7 bars | Committed `data/snapshots` + manifest SHAs | Weekly GitHub Action refresh | Previous manifest entries survive (merge, don't replace) |
+| Headlines | Live CNBC/MarketWatch RSS, 30-min cache | Minutes | Committed `news_raw.json`, labeled `snapshot (feed fallback)` |
+| Live tape | Bitget public tickers, 60-s cache | Seconds | Tape hides; math never depended on it |
+| Narration | Qwen, analysis-keyed cache | Cached per identical analysis | Labeled template; demo never blocks on it |
+
+### Failure modes (each one tested or observed)
+
+| Failure | User sees |
+|---|---|
+| No `TYPESAFE_API_KEY` | Regex behavior exactly as before — zero regression |
+| Jev timeout / 429 | Same: deterministic fallback, no error |
+| Ambiguous input ("nvda") | One targeted question, not a dead end |
+| Qwen proxy stall | Template prose, refusal surfaced in-UI |
+| RSS blocked | Snapshot fallback, labeled with age |
+| Forged receipt posted to `/api/explain` | 400, refused before any narration |
 
 **Design rule:** every number a judge sees comes from `lib/risk-engine` pure functions with committed inputs. The LLM never emits a number first. This is why the demo is deterministic and replayable.
 
