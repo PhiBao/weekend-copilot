@@ -37,9 +37,11 @@ const COMPANY_NAMES: Record<string, string> = {
 };
 
 const EXAMPLES = 'Try "add 10 rNVDA", "trim half my TSLA", "sell all rMETA", or "should I hold over the weekend?"';
+export { EXAMPLES };
 
-function findSymbol(text: string): string | null {
-  // rTOKEN / TOKEN / company name, in that priority
+export function findSymbol(text: string): string | null {
+  // rTOKEN / TOKEN / company name, in that priority. Exported for the
+  // dispatcher: a hold probe on the wrong line is worse than a Jev call.
   const rtok = text.match(/\br([a-z]{1,5})\b/);
   if (rtok) {
     const cand = toRToken(rtok[1]);
@@ -54,7 +56,7 @@ function findSymbol(text: string): string | null {
   return null;
 }
 
-function findQty(text: string): number | "half" | "all" | null {
+export function findQty(text: string): number | "half" | "all" | null {
   if (/\b(half|50%)\b/.test(text)) return "half";
   if (/\b(all|everything|entire|whole)\b/.test(text)) return "all";
   const m = text.match(/(\d+(?:\.\d+)?)\s*(shares?|contracts?|coins?|rtokens?|tokens?)?\b/);
@@ -63,6 +65,34 @@ function findQty(text: string): number | "half" | "all" | null {
     if (Number.isFinite(n) && n > 0 && n <= 1e6) return n;
   }
   return null;
+}
+
+export interface QtyResolution {
+  ok: boolean;
+  qty?: number;
+  /** Mirrors parseProposal: "all" always means liquidate (SELL side). */
+  side?: "BUY" | "SELL";
+  hint?: string;
+}
+
+/** Resolve an extracted qty against the book. Same rules as parseProposal. */
+export function resolveQty(
+  q: number | "half" | "all" | null,
+  symbol: string,
+  side: "BUY" | "SELL",
+  book: BookLine[]
+): QtyResolution {
+  if (typeof q === "number") return { ok: true, qty: q, side };
+  const line = book.find((b) => b.symbol.toUpperCase() === symbol);
+  if (q === "all") {
+    if (!line) return { ok: false, hint: `You hold no ${symbol} to sell it all of. ${EXAMPLES}` };
+    return { ok: true, qty: line.qty, side: "SELL" };
+  }
+  if (q === "half") {
+    if (!line) return { ok: false, hint: `You hold no ${symbol} — "half" needs a book line. Name a quantity instead. ${EXAMPLES}` };
+    return { ok: true, qty: Math.max(1, Math.round(line.qty / 2)), side };
+  }
+  return { ok: false, hint: `How much ${symbol}? ${EXAMPLES}` };
 }
 
 export function parseProposal(text: string, book: BookLine[]): ParseResult {

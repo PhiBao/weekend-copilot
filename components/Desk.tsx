@@ -6,7 +6,6 @@ import Marquee from "./Marquee";
 import RollingNumber from "./RollingNumber";
 import { Badge, Card, DivergingBar, KV, Micro, Stat, fmtPct, fmtUsdt, fmtX } from "./ui";
 import { PRESETS, type BookLine, type DeltaResponse, type DeskResult, type HypothesisView, type ReceiptView } from "@/lib/types";
-import { parseProposal } from "@/lib/nl";
 import { toNative } from "@/lib/market/symbols";
 
 interface VerifyState {
@@ -23,6 +22,9 @@ export default function Desk() {
   const [trials, setTrials] = useState("");
   const [nl, setNl] = useState("");
   const [probeNote, setProbeNote] = useState<string | null>(null);
+  const [interpretation, setInterpretation] = useState<string | null>(null);
+  const [clarify, setClarify] = useState<string | null>(null);
+  const [interpreting, setInterpreting] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [receiptId, setReceiptId] = useState<string | null>(null);
@@ -290,19 +292,53 @@ export default function Desk() {
             className="lg:col-span-3"
           >
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
-                const r = parseProposal(nl, book);
-                if (!r.ok || !r.proposal) {
-                  setError(r.hint ?? "could not parse");
-                  return;
-                }
-                setSide(r.proposal.side);
-                setSymbol(r.proposal.symbol);
-                setQty(String(r.proposal.qty));
-                setProbeNote(r.proposal.note ?? null);
+                if (!nl.trim() || loading || interpreting) return;
                 setError(null);
-                analyze(undefined, { side: r.proposal.side, symbol: r.proposal.symbol, qty: r.proposal.qty });
+                setProbeNote(null);
+                setInterpretation(null);
+                setClarify(null);
+                setInterpreting(true);
+                try {
+                  const res = await fetch("/api/dispatch", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ text: nl, book }),
+                  });
+                  const j = (await res.json()) as {
+                    ok: boolean;
+                    outcome?: {
+                      kind: string;
+                      proposal?: { side: "BUY" | "SELL"; symbol: string; qty: number; probe?: boolean; note?: string };
+                      confidence?: number;
+                      source?: string;
+                      interpretation?: string;
+                      question?: string;
+                      hint?: string;
+                    };
+                  };
+                  const o = j.outcome;
+                  if (!j.ok || !o) throw new Error("dispatch failed");
+                  if (o.kind === "proposal" && o.proposal) {
+                    setSide(o.proposal.side);
+                    setSymbol(o.proposal.symbol);
+                    setQty(String(o.proposal.qty));
+                    setProbeNote(o.proposal.note ?? null);
+                    if (o.source === "jev" && (o.confidence ?? 1) < 0.85 && o.interpretation) {
+                      setInterpretation(o.interpretation);
+                    }
+                    analyze(undefined, { side: o.proposal.side, symbol: o.proposal.symbol, qty: o.proposal.qty });
+                  } else if (o.kind === "clarify" && o.question) {
+                    setClarify(o.question);
+                  } else {
+                    setError("hint" in o && typeof o.hint === "string" ? o.hint : "could not parse");
+                  }
+                } catch {
+                  setError("could not parse — try an exact form like “add 10 rNVDA”");
+                } finally {
+                  setInterpreting(false);
+                }
               }}
               className="flex gap-2"
             >
@@ -315,13 +351,19 @@ export default function Desk() {
               />
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || interpreting}
                 className="shrink-0 rounded-xl bg-emerald-400 px-5 py-3 text-[13px] font-semibold text-emerald-950 transition-colors hover:bg-emerald-300 disabled:opacity-50"
               >
-                {loading ? "Grading…" : "Ask"}
+                {interpreting ? "Parsing…" : loading ? "Grading…" : "Ask"}
               </button>
             </form>
             {probeNote && <p className="mt-2 text-[12px] text-emerald-200/80">{probeNote}</p>}
+            {interpretation && (
+              <p className="mt-2 inline-block rounded-lg border border-sky-400/30 bg-sky-400/10 px-2.5 py-1 font-mono text-[11px] text-sky-200">
+                ◈ {interpretation} — correct me with the controls below
+              </p>
+            )}
+            {clarify && <p className="mt-2 text-[13px] leading-5 text-amber-200">❓ {clarify}</p>}
 
             <div className="mt-5 grid gap-4 sm:grid-cols-[auto_1fr_1fr_auto] sm:items-end">
               <div>

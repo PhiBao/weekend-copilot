@@ -46,6 +46,8 @@ app/page.tsx → components/Desk.tsx        LUI: NL box + book → graded cards 
 │
 ├── POST /api/delta      {book, proposal, trials?} → delta + stress + drift + headlines + breaker
 │                                                    + audit + hedges + critic rule + receipt
+├── POST /api/dispatch   {text, book} → regex fast path, else Jev intent + symbol + confidence
+│                                                    → proposal, targeted question, or today's hint (never throws)
 ├── POST /api/explain    {receipt} → number-locked Qwen prose, or deterministic template (labeled)
 ├── GET  /api/series     ?ticker= → trimmed native + rToken bars (24/7 weekend overlay chart)
 ├── GET  /api/tickers    → live Bitget rToken snapshot strip (60s cache)
@@ -104,11 +106,11 @@ Snapshots are committed so the demo and the receipts are reproducible even if ev
 
 ```bash
 pnpm install
-pnpm snapshot     # refresh keyless data (Bitget rTokens + Yahoo via curl; polite pacing)
-pnpm news         # refresh keyless headlines (CNBC/MarketWatch RSS)
-pnpm test         # 27 deterministic unit tests
-pnpm verify       # snapshot integrity + weekend-event + determinism checks
-pnpm dev          # http://localhost:3000
+pnpm snapshot   # refresh keyless data (Bitget rTokens + Yahoo via curl; polite pacing)
+pnpm news       # refresh keyless headlines (CNBC/MarketWatch RSS)
+pnpm test       # 44 deterministic unit tests (17 live-call-free dispatch fixtures included)
+pnpm verify     # snapshot integrity + weekend-event + determinism checks
+pnpm dev        # http://localhost:3000
 ```
 
 Optional LLM narration (any OpenAI-compatible endpoint; Qwen via Bitget proxy shown):
@@ -120,11 +122,21 @@ LLM_MODEL=qwen3.8-max \
 pnpm dev
 ```
 
-Without `LLM_*` the deterministic template renders and is labeled as such in the UI. Qwen reasoning is disabled (`enable_thinking:false`) to keep narration at ~13s; the UI renders cards first and narrates async.
+Without `LLM_*` the deterministic template renders and is labeled as such in the UI. Qwen reasoning is disabled (`enable_thinking:false`) to keep narration at ~5s cold / 14ms cached; the UI renders cards first and narrates async.
+
+Confidence-aware NL dispatch (TypeSafe Jev — intent only, never numbers):
+
+```bash
+TYPESAFE_API_KEY=... \
+TYPESAFE_MODEL=jev-latest \
+pnpm dev
+```
+
+The command box tries the deterministic regex parser first (exact inputs never touch the network), then asks Jev for a typed action + symbol + confidence, and the code validates, extracts quantities, and computes everything. Low-confidence reads surface an "interpreted as …" chip or one targeted clarifying question instead of a dead-end hint. Without the key, today's regex behavior is unchanged. See `.env.example`.
 
 ## Testing & verification
 
-- **27 unit tests** — delta determinism, weekend gap extraction, in-token drift, breaker flags, DSR/PSR behavior, receipt chain + tamper, number-lock validator, NL parser, RSS parsing/entity decoding, headline ranking.
+- **44 unit tests** — delta determinism, weekend gap extraction, in-token drift, breaker flags, DSR/PSR behavior, receipt chain + tamper, number-lock validator, NL parser, RSS parsing/entity decoding, headline ranking, intent-dispatch composition (recorded Jev fixtures, no live calls in tests).
 - **`pnpm verify` / `/api/verify`** — 7 checks: snapshots present, manifest SHA integrity, delta determinism (same input → identical output), weekend-event sufficiency, audit sanity, breaker execution, receipt-chain validity.
 - **Tamper demo** — the verify endpoint returns a doctored receipt; the hash intentionally fails so anyone can see verification is real.
 
@@ -140,9 +152,9 @@ Without `LLM_*` the deterministic template renders and is labeled as such in the
 
 | Judging focus | How this entry answers |
 |---|---|
-| Feature depth (data sources / integrations) | 4 live data integrations (Bitget public candles + tickers, Yahoo, RSS), 9 engine modules, 8 API routes, LUI parser, overlay chart, receipts, graveyard |
+| Feature depth (data sources / integrations) | 4 live data integrations (Bitget public candles + tickers, Yahoo, RSS), 10 engine modules, 9 API routes, confidence-aware NL dispatch, overlay chart, receipts, graveyard |
 | Research quality | Structural weekend-drift study from real 24/7 prints; Fri→Mon analogue table; Bailey & López de Prado selection-bias audit that deliberately fails our own sleeve |
-| LUI fluency | Plain-English proposals → deterministic proposal → graded cards; Qwen narration with mechanical number-lock |
+| LUI fluency | Plain-English proposals → confidence-aware dispatch (regex fast path, Jev intent + symbol with calibrated confidence, clarifying questions instead of dead ends) → graded cards; Qwen narration with mechanical number-lock |
 | Personalized thesis | The whole product is "the answer depends on your book" — demonstrated live with opposite verdicts on the same trade |
 
 ## Roadmap beyond the hackathon
