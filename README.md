@@ -49,17 +49,16 @@ Jev may only return **typed judgments from a closed set** (never prose, never nu
 over committed data. Either key missing, either vendor down — the desk still grades, because the
 fallbacks are the original deterministic paths, not error pages.
 
-[![Weekend Copilot system architecture](docs/diagrams/architecture.png)](docs/diagrams/architecture.html)
+[![Weekend Copilot system architecture — click to zoom](docs/diagrams/architecture.png)](docs/diagrams/architecture.png)
 
 Vendor models run in exactly two places (Jev for intent, Qwen for narration — thin outlines).
 Everything else is first-party code; the emerald node is the thesis in one box: preregistered receipts.
 If you removed every AI call, the desk would still grade — less fluently, but honestly.
-Full-scale versions: [system architecture](docs/diagrams/architecture.html) ·
-[graded-trade sequence](docs/diagrams/sequence.html).
+Click either diagram to zoom in.
 
 ### One graded trade, end to end
 
-[![One graded trade, end to end](docs/diagrams/sequence.png)](docs/diagrams/sequence.html)
+[![One graded trade, end to end — click to zoom](docs/diagrams/sequence.png)](docs/diagrams/sequence.png)
 
 ### Request lifecycle (matches the code, in order)
 
