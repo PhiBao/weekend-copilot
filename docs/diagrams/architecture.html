@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekend Copilot · System architecture</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #08090c;
+      --color-ink:     #f4f5f5;
+      --color-muted:   #a1a1aa;
+      --color-accent:  #34d399;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .frame { max-width: 1360px; width: 100%; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 0.75rem;
+    }
+
+    .lede {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: var(--color-muted);
+      max-width: 72ch;
+      margin-bottom: 1.5rem;
+    }
+
+    .diagram-container { width: 100%; overflow-x: auto; }
+    svg { width: 100%; min-width: 1280px; display: block; }
+    @media print {
+      .diagram-container { overflow-x: visible; }
+      svg { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Architecture · Weekend Copilot</p>
+    <h1>AI at the edges, determinism in the core</h1>
+    <p class="lede">Two narrow AI gates, both mechanically constrained: Jev returns typed judgments from a closed set, Qwen rephrases locked numbers. Everything between input and output is pure functions over committed data.</p>
+
+    <div class="diagram-container">
+    <svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="wcp-arch-title wcp-arch-desc">
+      <title id="wcp-arch-title">Weekend Copilot system architecture</title>
+      <desc id="wcp-arch-desc">System diagram: a trader's book flows through intent dispatch, deterministic grading with preregistered receipts, and number-locked narration.</desc>
+      <defs>
+        <marker id="wcp-arch-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#a1a1aa"/></marker>
+        <marker id="wcp-arch-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#34d399"/></marker>
+        <marker id="wcp-arch-arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#6f9fd8"/></marker>
+      </defs>
+
+      <rect width="100%" height="100%" fill="#08090c"/>
+
+      <!-- Zones (before arrows and nodes) -->
+      <rect x="325" y="40" width="606" height="92" rx="8" fill="rgba(244,245,245,0.02)" stroke="rgba(244,245,245,0.10)" stroke-width="0.8"/>
+      <rect x="588" y="44" width="80" height="12" rx="2" fill="#08090c"/>
+      <text x="628" y="53" fill="rgba(244,245,245,0.40)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">DATA · KEYLESS</text>
+
+      <rect x="250" y="150" width="220" height="256" rx="8" fill="rgba(244,245,245,0.02)" stroke="rgba(244,245,245,0.10)" stroke-width="0.8"/>
+      <rect x="322" y="154" width="76" height="12" rx="2" fill="#08090c"/>
+      <text x="360" y="163" fill="rgba(244,245,245,0.40)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">UNDERSTANDING</text>
+
+      <rect x="540" y="150" width="220" height="384" rx="8" fill="rgba(244,245,245,0.02)" stroke="rgba(244,245,245,0.10)" stroke-width="0.8"/>
+      <rect x="598" y="154" width="104" height="12" rx="2" fill="#08090c"/>
+      <text x="650" y="163" fill="rgba(244,245,245,0.40)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">DETERMINISTIC CORE</text>
+
+      <rect x="840" y="150" width="220" height="320" rx="8" fill="rgba(244,245,245,0.02)" stroke="rgba(244,245,245,0.10)" stroke-width="0.8"/>
+      <rect x="904" y="154" width="92" height="12" rx="2" fill="#08090c"/>
+      <text x="950" y="163" fill="rgba(244,245,245,0.40)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">NARRATION + PROOF</text>
+
+      <rect x="633" y="486" width="552" height="120" rx="8" fill="rgba(244,245,245,0.02)" stroke="rgba(244,245,245,0.10)" stroke-width="0.8"/>
+      <rect x="889" y="490" width="40" height="12" rx="2" fill="#08090c"/>
+      <text x="909" y="499" fill="rgba(244,245,245,0.40)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">PROOF</text>
+
+      <!-- Arrows (behind boxes) -->
+      <!-- e1 Desk->Dispatch GRADE -->
+      <line x1="190" y1="211" x2="275" y2="211" stroke="#6f9fd8" stroke-width="1.2" marker-end="url(#wcp-arch-arrow-link)"/>
+      <!-- e2 Desk->Explain scenic top -->
+      <path d="M 190,229 H 230 Q 238,229 238,221 V 148 Q 238,140 246,140 H 842 Q 850,140 850,148 V 190" fill="none" stroke="#6f9fd8" stroke-width="1.2" marker-end="url(#wcp-arch-arrow-link)"/>
+      <!-- e3 Dispatch->Regex -->
+      <line x1="360" y1="238" x2="360" y2="254" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-arch-arrow)"/>
+      <!-- e4 Dispatch->Jev -->
+      <path d="M 445,214 H 467 Q 475,214 475,222 V 334 Q 475,342 467,342 H 445" fill="none" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-arch-arrow)"/>
+      <!-- e5 Regex->Delta -->
+      <path d="M 445,278 H 545 Q 553,278 553,270 V 214 Q 553,206 561,206 H 565" fill="none" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-arch-arrow)"/>
+      <!-- e6 Jev->Delta -->
+      <path d="M 445,342 H 525 Q 533,342 533,334 V 230 Q 533,222 541,222 H 565" fill="none" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-arch-arrow)"/>
+      <!-- e7 Snap->Delta BARS -->
+      <line x1="650" y1="120" x2="650" y2="190" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-arch-arrow)"/>
+      <!-- e7b Live->Delta -->
+      <path d="M 844,120 V 132 Q 844,140 836,140 H 688 Q 680,140 680,148 V 190" fill="none" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-arch-arrow)"/>
+      <!-- eGH GH->Snap -->
+      <line x1="519" y1="96" x2="565" y2="96" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-arch-arrow)"/>
+      <!-- e8 Delta->Math -->
+      <line x1="650" y1="238" x2="650" y2="254" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-arch-arrow)"/>
+      <!-- e9 Math->Receipts -->
+      <line x1="650" y1="302" x2="650" y2="318" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-arch-arrow)"/>
+      <!-- e9b Receipts->Grave -->
+      <line x1="650" y1="366" x2="650" y2="382" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-arch-arrow)"/>
+      <!-- e10 Delta->Desk return VERDICT (dashed, hops over P2 horizontal) -->
+      <path d="M 735,214 H 804 Q 812,214 812,222 V 436 a 8,8 0 0,0 0,16 V 600 Q 812,608 804,608 H 128 Q 120,608 120,600 V 248" fill="none" stroke="#a1a1aa" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#wcp-arch-arrow)"/>
+      <!-- e11 Explain->Lock -->
+      <line x1="950" y1="238" x2="950" y2="254" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-arch-arrow)"/>
+      <!-- e12 Lock->Qwen -->
+      <line x1="950" y1="302" x2="950" y2="318" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-arch-arrow)"/>
+      <!-- e12b Lock->Tmpl -->
+      <path d="M 1035,278 H 1039 Q 1047,278 1047,286 V 398 Q 1047,406 1039,406 H 1035" fill="none" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-arch-arrow)"/>
+      <!-- P1 Receipts->Verify -->
+      <path d="M 735,330 H 747 Q 755,330 755,338 V 544" fill="none" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-arch-arrow)"/>
+      <!-- P2 Receipts->RVerify -->
+      <path d="M 735,342 H 782 Q 790,342 790,350 V 436 Q 790,444 798,444 H 901 Q 909,444 909,452 V 544" fill="none" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-arch-arrow)"/>
+      <!-- P3 Receipts->Log (bridges over P2 vertical at x909) -->
+      <path d="M 735,354 H 817 Q 825,354 825,362 V 476 Q 825,484 833,484 H 901 a 8,8 0 0,1 16,0 H 1085 Q 1093,484 1093,492 V 544" fill="none" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-arch-arrow)"/>
+
+      <!-- Arrow labels (mask + 6px+ gap) -->
+      <rect x="208" y="193" width="40" height="12" rx="2" fill="#08090c"/>
+      <text x="228" y="202" fill="#6f9fd8" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">GRADE</text>
+
+      <rect x="658" y="134" width="36" height="12" rx="2" fill="#08090c"/>
+      <text x="676" y="143" fill="#a1a1aa" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">BARS</text>
+
+      <rect x="435" y="590" width="50" height="12" rx="2" fill="#08090c"/>
+      <text x="460" y="599" fill="#a1a1aa" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">VERDICT</text>
+
+      <rect x="1049" y="504" width="36" height="12" rx="2" fill="#08090c"/>
+      <text x="1067" y="513" fill="#a1a1aa" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">PROOF</text>
+
+      <!-- Node: Desk (input) -->
+      <rect x="50" y="192" width="140" height="56" rx="6" fill="#08090c"/>
+      <rect x="50" y="192" width="140" height="56" rx="6" fill="rgba(161,161,170,0.10)" stroke="#71717a" stroke-width="1"/>
+      <rect x="58" y="198" width="28" height="12" rx="2" fill="transparent" stroke="rgba(113,113,122,0.60)" stroke-width="0.8"/>
+      <text x="72" y="207" fill="#71717a" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">UI</text>
+      <text x="120" y="228" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Desk.tsx</text>
+      <text x="120" y="242" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">book · NL box · cards</text>
+
+      <!-- Node: GH (backend) -->
+      <rect x="349" y="72" width="170" height="48" rx="6" fill="#08090c"/>
+      <rect x="349" y="72" width="170" height="48" rx="6" fill="#101318" stroke="#f4f5f5" stroke-width="1"/>
+      <rect x="357" y="78" width="28" height="12" rx="2" fill="transparent" stroke="rgba(244,245,245,0.40)" stroke-width="0.8"/>
+      <text x="371" y="87" fill="#a1a1aa" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">CI</text>
+      <text x="434" y="102" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">weekly Action</text>
+      <text x="434" y="114" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">refresh · verify · commit</text>
+
+      <!-- Node: Snap (store) -->
+      <rect x="565" y="72" width="170" height="48" rx="6" fill="#08090c"/>
+      <rect x="565" y="72" width="170" height="48" rx="6" fill="rgba(244,245,245,0.05)" stroke="#a1a1aa" stroke-width="1"/>
+      <rect x="573" y="78" width="36" height="12" rx="2" fill="transparent" stroke="rgba(161,161,170,0.50)" stroke-width="0.8"/>
+      <text x="591" y="87" fill="#a1a1aa" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">DATA</text>
+      <text x="650" y="102" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">snapshots</text>
+      <text x="650" y="114" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">manifest SHAs · committed</text>
+
+      <!-- Node: Live (store) -->
+      <rect x="759" y="72" width="170" height="48" rx="6" fill="#08090c"/>
+      <rect x="759" y="72" width="170" height="48" rx="6" fill="rgba(244,245,245,0.05)" stroke="#a1a1aa" stroke-width="1"/>
+      <rect x="767" y="78" width="36" height="12" rx="2" fill="transparent" stroke="rgba(161,161,170,0.50)" stroke-width="0.8"/>
+      <text x="785" y="87" fill="#a1a1aa" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">DATA</text>
+      <text x="844" y="102" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">live RSS + tickers</text>
+      <text x="844" y="114" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">30-min / 60-s caches</text>
+
+      <!-- Node: Dispatch (backend) -->
+      <rect x="275" y="190" width="170" height="48" rx="6" fill="#08090c"/>
+      <rect x="275" y="190" width="170" height="48" rx="6" fill="#101318" stroke="#f4f5f5" stroke-width="1"/>
+      <rect x="283" y="196" width="32" height="12" rx="2" fill="transparent" stroke="rgba(244,245,245,0.40)" stroke-width="0.8"/>
+      <text x="299" y="205" fill="#a1a1aa" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">API</text>
+      <text x="360" y="220" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">POST /api/dispatch</text>
+      <text x="360" y="232" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">intent + confidence</text>
+
+      <!-- Node: Regex (backend) -->
+      <rect x="275" y="254" width="170" height="48" rx="6" fill="#08090c"/>
+      <rect x="275" y="254" width="170" height="48" rx="6" fill="#101318" stroke="#f4f5f5" stroke-width="1"/>
+      <rect x="283" y="260" width="32" height="12" rx="2" fill="transparent" stroke="rgba(244,245,245,0.40)" stroke-width="0.8"/>
+      <text x="299" y="269" fill="#a1a1aa" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">LIB</text>
+      <text x="360" y="284" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">lib/nl.ts</text>
+      <text x="360" y="296" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">regex fast path · 0 ms</text>
+
+      <!-- Node: Jev (external) -->
+      <rect x="275" y="318" width="170" height="48" rx="6" fill="#08090c"/>
+      <rect x="275" y="318" width="170" height="48" rx="6" fill="rgba(244,245,245,0.03)" stroke="rgba(244,245,245,0.30)" stroke-width="1"/>
+      <rect x="283" y="324" width="32" height="12" rx="2" fill="transparent" stroke="rgba(244,245,245,0.30)" stroke-width="0.8"/>
+      <text x="299" y="333" fill="#a1a1aa" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">EXT</text>
+      <text x="360" y="348" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">TypeSafe Jev</text>
+      <text x="360" y="360" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">action + symbol</text>
+
+      <!-- Node: Delta (backend) -->
+      <rect x="565" y="190" width="170" height="48" rx="6" fill="#08090c"/>
+      <rect x="565" y="190" width="170" height="48" rx="6" fill="#101318" stroke="#f4f5f5" stroke-width="1"/>
+      <rect x="573" y="196" width="32" height="12" rx="2" fill="transparent" stroke="rgba(244,245,245,0.40)" stroke-width="0.8"/>
+      <text x="589" y="205" fill="#a1a1aa" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">API</text>
+      <text x="650" y="220" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">POST /api/delta</text>
+      <text x="650" y="232" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">grade + receipt</text>
+
+      <!-- Node: Math (backend) -->
+      <rect x="565" y="254" width="170" height="48" rx="6" fill="#08090c"/>
+      <rect x="565" y="254" width="170" height="48" rx="6" fill="#101318" stroke="#f4f5f5" stroke-width="1"/>
+      <rect x="573" y="260" width="32" height="12" rx="2" fill="transparent" stroke="rgba(244,245,245,0.40)" stroke-width="0.8"/>
+      <text x="589" y="269" fill="#a1a1aa" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">LIB</text>
+      <text x="650" y="284" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">grade pipeline</text>
+      <text x="650" y="296" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">stress · breaker · audit</text>
+
+      <!-- Node: Receipts (focal) -->
+      <rect x="565" y="318" width="170" height="48" rx="6" fill="#08090c"/>
+      <rect x="565" y="318" width="170" height="48" rx="6" fill="rgba(52,211,153,0.08)" stroke="#34d399" stroke-width="1"/>
+      <rect x="573" y="324" width="36" height="12" rx="2" fill="transparent" stroke="rgba(52,211,153,0.50)" stroke-width="0.8"/>
+      <text x="591" y="333" fill="#34d399" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">CORE</text>
+      <text x="650" y="348" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">receipts.ts</text>
+      <text x="650" y="360" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">hash-chained receipts</text>
+
+      <!-- Node: Grave (backend) -->
+      <rect x="565" y="382" width="170" height="48" rx="6" fill="#08090c"/>
+      <rect x="565" y="382" width="170" height="48" rx="6" fill="#101318" stroke="#f4f5f5" stroke-width="1"/>
+      <rect x="573" y="388" width="32" height="12" rx="2" fill="transparent" stroke="rgba(244,245,245,0.40)" stroke-width="0.8"/>
+      <text x="589" y="397" fill="#a1a1aa" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">MEM</text>
+      <text x="650" y="412" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">graveyard.ts</text>
+      <text x="650" y="424" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">UNTESTED hypotheses</text>
+
+      <!-- Node: Explain (backend) -->
+      <rect x="865" y="190" width="170" height="48" rx="6" fill="#08090c"/>
+      <rect x="865" y="190" width="170" height="48" rx="6" fill="#101318" stroke="#f4f5f5" stroke-width="1"/>
+      <rect x="873" y="196" width="32" height="12" rx="2" fill="transparent" stroke="rgba(244,245,245,0.40)" stroke-width="0.8"/>
+      <text x="889" y="205" fill="#a1a1aa" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">API</text>
+      <text x="950" y="220" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">POST /api/explain</text>
+      <text x="950" y="232" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">narrate + verify</text>
+
+      <!-- Node: Lock (security) -->
+      <rect x="865" y="254" width="170" height="48" rx="6" fill="#08090c"/>
+      <rect x="865" y="254" width="170" height="48" rx="6" fill="rgba(52,211,153,0.05)" stroke="rgba(52,211,153,0.50)" stroke-width="1" stroke-dasharray="4,4"/>
+      <rect x="873" y="260" width="32" height="12" rx="2" fill="transparent" stroke="rgba(52,211,153,0.50)" stroke-width="0.8"/>
+      <text x="889" y="269" fill="#34d399" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">SEC</text>
+      <text x="950" y="284" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">numberlock.ts</text>
+      <text x="950" y="296" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">refuse bad decimals</text>
+
+      <!-- Node: Qwen (external) -->
+      <rect x="865" y="318" width="170" height="48" rx="6" fill="#08090c"/>
+      <rect x="865" y="318" width="170" height="48" rx="6" fill="rgba(244,245,245,0.03)" stroke="rgba(244,245,245,0.30)" stroke-width="1"/>
+      <rect x="873" y="324" width="32" height="12" rx="2" fill="transparent" stroke="rgba(244,245,245,0.30)" stroke-width="0.8"/>
+      <text x="889" y="333" fill="#a1a1aa" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">EXT</text>
+      <text x="950" y="348" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Qwen 3.8-max</text>
+      <text x="950" y="360" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">4 sentences · temp 0</text>
+
+      <!-- Node: Tmpl (backend) -->
+      <rect x="865" y="382" width="170" height="48" rx="6" fill="#08090c"/>
+      <rect x="865" y="382" width="170" height="48" rx="6" fill="#101318" stroke="#f4f5f5" stroke-width="1"/>
+      <rect x="873" y="388" width="32" height="12" rx="2" fill="transparent" stroke="rgba(244,245,245,0.40)" stroke-width="0.8"/>
+      <text x="889" y="397" fill="#a1a1aa" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">LIB</text>
+      <text x="950" y="412" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">fallback template</text>
+      <text x="950" y="424" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">deterministic · labeled</text>
+
+      <!-- Node: Verify (backend) -->
+      <rect x="645" y="544" width="160" height="48" rx="6" fill="#08090c"/>
+      <rect x="645" y="544" width="160" height="48" rx="6" fill="#101318" stroke="#f4f5f5" stroke-width="1"/>
+      <rect x="653" y="550" width="32" height="12" rx="2" fill="transparent" stroke="rgba(244,245,245,0.40)" stroke-width="0.8"/>
+      <text x="669" y="559" fill="#a1a1aa" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">API</text>
+      <text x="725" y="574" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">GET /api/verify</text>
+      <text x="725" y="586" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">7 checks</text>
+
+      <!-- Node: RVerify (backend) -->
+      <rect x="829" y="544" width="160" height="48" rx="6" fill="#08090c"/>
+      <rect x="829" y="544" width="160" height="48" rx="6" fill="#101318" stroke="#f4f5f5" stroke-width="1"/>
+      <rect x="837" y="550" width="32" height="12" rx="2" fill="transparent" stroke="rgba(244,245,245,0.40)" stroke-width="0.8"/>
+      <text x="853" y="559" fill="#a1a1aa" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">API</text>
+      <text x="909" y="574" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">receipt/verify</text>
+      <text x="909" y="586" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">stateless + tamper demo</text>
+
+      <!-- Node: Log (store) -->
+      <rect x="1013" y="544" width="160" height="48" rx="6" fill="#08090c"/>
+      <rect x="1013" y="544" width="160" height="48" rx="6" fill="rgba(244,245,245,0.05)" stroke="#a1a1aa" stroke-width="1"/>
+      <rect x="1021" y="550" width="32" height="12" rx="2" fill="transparent" stroke="rgba(161,161,170,0.50)" stroke-width="0.8"/>
+      <text x="1037" y="559" fill="#a1a1aa" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">LOG</text>
+      <text x="1093" y="574" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">paper_log.csv</text>
+      <text x="1093" y="586" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">decisions + hashes</text>
+
+      <!-- Legend strip -->
+      <line x1="40" y1="644" x2="1240" y2="644" stroke="rgba(244,245,245,0.10)" stroke-width="0.8"/>
+      <text x="40" y="660" fill="#a1a1aa" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.18em">LEGEND</text>
+
+      <rect x="40" y="668" width="14" height="10" rx="2" fill="rgba(52,211,153,0.08)" stroke="#34d399" stroke-width="1"/>
+      <text x="60" y="676" fill="#a1a1aa" font-size="8.5" font-family="'Geist', sans-serif">Focal</text>
+
+      <rect x="140" y="668" width="14" height="10" rx="2" fill="#101318" stroke="#f4f5f5" stroke-width="1"/>
+      <text x="160" y="676" fill="#a1a1aa" font-size="8.5" font-family="'Geist', sans-serif">Backend</text>
+
+      <rect x="250" y="668" width="14" height="10" rx="2" fill="rgba(244,245,245,0.05)" stroke="#a1a1aa" stroke-width="1"/>
+      <text x="270" y="676" fill="#a1a1aa" font-size="8.5" font-family="'Geist', sans-serif">Store</text>
+
+      <rect x="340" y="668" width="14" height="10" rx="2" fill="rgba(244,245,245,0.03)" stroke="rgba(244,245,245,0.30)" stroke-width="1"/>
+      <text x="360" y="676" fill="#a1a1aa" font-size="8.5" font-family="'Geist', sans-serif">External</text>
+
+      <rect x="460" y="668" width="14" height="10" rx="2" fill="rgba(161,161,170,0.10)" stroke="#71717a" stroke-width="1"/>
+      <text x="480" y="676" fill="#a1a1aa" font-size="8.5" font-family="'Geist', sans-serif">Input</text>
+
+      <rect x="550" y="668" width="14" height="10" rx="2" fill="rgba(52,211,153,0.05)" stroke="rgba(52,211,153,0.50)" stroke-width="1" stroke-dasharray="4,4"/>
+      <text x="570" y="676" fill="#a1a1aa" font-size="8.5" font-family="'Geist', sans-serif">Guard</text>
+
+      <line x1="650" y1="674" x2="678" y2="674" stroke="#6f9fd8" stroke-width="1.2" marker-end="url(#wcp-arch-arrow-link)"/>
+      <text x="686" y="676" fill="#a1a1aa" font-size="8.5" font-family="'Geist', sans-serif">HTTP</text>
+
+      <line x1="760" y1="674" x2="788" y2="674" stroke="#a1a1aa" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#wcp-arch-arrow)"/>
+      <text x="796" y="676" fill="#a1a1aa" font-size="8.5" font-family="'Geist', sans-serif">Return</text>
+    </svg>
+    </div>
+  </div>
+</body>
+</html>

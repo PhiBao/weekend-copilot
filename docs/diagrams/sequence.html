@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekend Copilot · One graded trade, end to end</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #08090c;
+      --color-ink:     #f4f5f5;
+      --color-muted:   #a1a1aa;
+      --color-accent:  #34d399;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .frame { max-width: 1040px; width: 100%; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 0.75rem;
+    }
+
+    .lede {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: var(--color-muted);
+      max-width: 72ch;
+      margin-bottom: 1.5rem;
+    }
+
+    .diagram-container { width: 100%; overflow-x: auto; }
+    svg { width: 100%; min-width: 960px; display: block; }
+    @media print {
+      .diagram-container { overflow-x: visible; }
+      svg { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Sequence · Weekend Copilot</p>
+    <h1>One graded trade, end to end</h1>
+    <p class="lede">A hold-check question travels from the desk through Jev dispatch, deterministic grading with a preregistered receipt, and number-locked narration.</p>
+
+    <div class="diagram-container">
+    <svg viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="wcp-seq-title wcp-seq-desc">
+      <title id="wcp-seq-title">One graded trade, end to end</title>
+      <desc id="wcp-seq-desc">Sequence diagram: a hold-check question travels from the desk through Jev dispatch, deterministic grading, and locked narration.</desc>
+      <defs>
+        <marker id="wcp-seq-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#a1a1aa"/></marker>
+        <marker id="wcp-seq-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#34d399"/></marker>
+        <marker id="wcp-seq-arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#6f9fd8"/></marker>
+      </defs>
+
+      <rect width="100%" height="100%" fill="#08090c"/>
+
+      <!-- Trader query callout -->
+      <rect x="40" y="16" width="880" height="40" rx="6" fill="rgba(244,245,245,0.03)" stroke="rgba(244,245,245,0.12)" stroke-width="0.8"/>
+      <text x="480" y="41" fill="#f4f5f5" font-size="14" font-style="italic" font-family="'Instrument Serif', serif" text-anchor="middle">“Is Tesla safe to hold through the weekend?” — regex can’t parse it; Jev decides.</text>
+
+      <!-- Lifelines -->
+      <line x1="92" y1="124" x2="92" y2="500" stroke="rgba(244,245,245,0.20)" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="282" y1="124" x2="282" y2="500" stroke="rgba(244,245,245,0.20)" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="472" y1="124" x2="472" y2="500" stroke="rgba(244,245,245,0.20)" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="662" y1="124" x2="662" y2="500" stroke="rgba(244,245,245,0.20)" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="852" y1="124" x2="852" y2="500" stroke="rgba(244,245,245,0.20)" stroke-width="1" stroke-dasharray="3,3"/>
+
+      <!-- Activation bars -->
+      <rect x="278" y="156" width="8" height="120" fill="rgba(244,245,245,0.06)" stroke="#a1a1aa" stroke-width="0.8"/>
+      <rect x="468" y="184" width="8" height="36" fill="rgba(244,245,245,0.06)" stroke="#a1a1aa" stroke-width="0.8"/>
+      <rect x="658" y="296" width="8" height="64" fill="rgba(244,245,245,0.06)" stroke="#a1a1aa" stroke-width="0.8"/>
+      <rect x="848" y="408" width="8" height="64" fill="rgba(244,245,245,0.06)" stroke="#a1a1aa" stroke-width="0.8"/>
+
+      <!-- Messages -->
+      <!-- m1 UI->D -->
+      <line x1="92" y1="160" x2="282" y2="160" stroke="#6f9fd8" stroke-width="1.2" marker-end="url(#wcp-seq-arrow-link)"/>
+      <!-- m2 D->J -->
+      <line x1="282" y1="188" x2="472" y2="188" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-seq-arrow)"/>
+      <!-- m3 J->D return -->
+      <line x1="472" y1="216" x2="282" y2="216" stroke="#a1a1aa" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#wcp-seq-arrow)"/>
+      <!-- m4 D self -->
+      <path d="M 282,244 H 302 Q 310,244 310,252 V 264 Q 310,272 302,272 H 282" fill="none" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-seq-arrow)"/>
+      <!-- m5 D->UI return -->
+      <line x1="282" y1="272" x2="92" y2="272" stroke="#a1a1aa" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#wcp-seq-arrow)"/>
+      <!-- m6 UI->G -->
+      <line x1="92" y1="300" x2="662" y2="300" stroke="#6f9fd8" stroke-width="1.2" marker-end="url(#wcp-seq-arrow-link)"/>
+      <!-- m7 G self -->
+      <path d="M 662,328 H 682 Q 690,328 690,336 V 348 Q 690,356 682,356 H 662" fill="none" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-seq-arrow)"/>
+      <!-- m8 G->UI headline -->
+      <line x1="662" y1="356" x2="92" y2="356" stroke="#34d399" stroke-width="1.4" marker-end="url(#wcp-seq-arrow-accent)"/>
+      <!-- m9 UI->E -->
+      <line x1="92" y1="384" x2="852" y2="384" stroke="#6f9fd8" stroke-width="1.2" marker-end="url(#wcp-seq-arrow-link)"/>
+      <!-- m10 E self -->
+      <path d="M 852,412 H 824 Q 816,412 816,420 V 432 Q 816,440 824,440 H 852" fill="none" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-seq-arrow)"/>
+      <!-- m11 E self -->
+      <path d="M 852,440 H 824 Q 816,440 816,448 V 460 Q 816,468 824,468 H 852" fill="none" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-seq-arrow)"/>
+      <!-- m12 E->UI return -->
+      <line x1="852" y1="468" x2="92" y2="468" stroke="#a1a1aa" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#wcp-seq-arrow)"/>
+
+      <!-- Message labels -->
+      <rect x="143" y="142" width="88" height="12" rx="2" fill="#08090c"/>
+      <text x="187" y="151" fill="#a1a1aa" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">POST TEXT+BOOK</text>
+
+      <rect x="349" y="170" width="56" height="12" rx="2" fill="#08090c"/>
+      <text x="377" y="179" fill="#a1a1aa" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">MISS→CHOICE</text>
+
+      <rect x="337" y="198" width="80" height="12" rx="2" fill="#08090c"/>
+      <text x="377" y="207" fill="#a1a1aa" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">HOLD_CHECK .9</text>
+
+      <rect x="318" y="238" width="68" height="12" rx="2" fill="#08090c"/>
+      <text x="352" y="247" fill="#a1a1aa" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">SCOPE RTSLA</text>
+
+      <rect x="151" y="254" width="72" height="12" rx="2" fill="#08090c"/>
+      <text x="187" y="263" fill="#a1a1aa" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">PROPOSAL+CHIP</text>
+
+      <rect x="341" y="282" width="72" height="12" rx="2" fill="#08090c"/>
+      <text x="377" y="291" fill="#a1a1aa" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">POST PROPOSAL</text>
+
+      <rect x="698" y="322" width="72" height="12" rx="2" fill="#08090c"/>
+      <text x="734" y="331" fill="#a1a1aa" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">GRADE+RECEIPT</text>
+
+      <rect x="151" y="338" width="72" height="12" rx="2" fill="#08090c"/>
+      <text x="187" y="347" fill="#34d399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">VERDICT+CARDS</text>
+
+      <rect x="721" y="366" width="72" height="12" rx="2" fill="#08090c"/>
+      <text x="757" y="375" fill="#a1a1aa" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">POST RECEIPT</text>
+
+      <rect x="724" y="406" width="84" height="12" rx="2" fill="#08090c"/>
+      <text x="766" y="415" fill="#a1a1aa" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">VERIFY+NARRATE</text>
+
+      <rect x="724" y="434" width="68" height="12" rx="2" fill="#08090c"/>
+      <text x="758" y="443" fill="#a1a1aa" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">NUMBER-LOCK</text>
+
+      <rect x="151" y="450" width="72" height="12" rx="2" fill="#08090c"/>
+      <text x="187" y="459" fill="#a1a1aa" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">NARRATION CARD</text>
+
+      <!-- Actors -->
+      <rect x="40" y="76" width="104" height="48" rx="6" fill="#08090c"/>
+      <rect x="40" y="76" width="104" height="48" rx="6" fill="rgba(244,245,245,0.03)" stroke="rgba(244,245,245,0.30)" stroke-width="1"/>
+      <text x="92" y="100" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Desk UI</text>
+      <text x="92" y="116" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Next.js</text>
+
+      <rect x="230" y="76" width="104" height="48" rx="6" fill="#08090c"/>
+      <rect x="230" y="76" width="104" height="48" rx="6" fill="rgba(244,245,245,0.03)" stroke="rgba(244,245,245,0.30)" stroke-width="1"/>
+      <text x="282" y="100" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">/api/dispatch</text>
+      <text x="282" y="116" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">intent</text>
+
+      <rect x="420" y="76" width="104" height="48" rx="6" fill="#08090c"/>
+      <rect x="420" y="76" width="104" height="48" rx="6" fill="rgba(244,245,245,0.03)" stroke="rgba(244,245,245,0.30)" stroke-width="1"/>
+      <text x="472" y="100" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Jev</text>
+      <text x="472" y="116" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">TypeSafe</text>
+
+      <rect x="610" y="76" width="104" height="48" rx="6" fill="#08090c"/>
+      <rect x="610" y="76" width="104" height="48" rx="6" fill="rgba(244,245,245,0.03)" stroke="rgba(244,245,245,0.30)" stroke-width="1"/>
+      <text x="662" y="100" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">/api/delta</text>
+      <text x="662" y="116" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">grade</text>
+
+      <rect x="800" y="76" width="104" height="48" rx="6" fill="#08090c"/>
+      <rect x="800" y="76" width="104" height="48" rx="6" fill="rgba(244,245,245,0.03)" stroke="rgba(244,245,245,0.30)" stroke-width="1"/>
+      <text x="852" y="100" fill="#f4f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">/api/explain</text>
+      <text x="852" y="116" fill="#a1a1aa" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">narrate</text>
+
+      <!-- Legend strip -->
+      <line x1="40" y1="528" x2="920" y2="528" stroke="rgba(244,245,245,0.10)" stroke-width="0.8"/>
+      <text x="40" y="544" fill="#a1a1aa" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.18em">LEGEND</text>
+
+      <line x1="40" y1="560" x2="68" y2="560" stroke="#a1a1aa" stroke-width="1.2" marker-end="url(#wcp-seq-arrow)"/>
+      <text x="76" y="562" fill="#a1a1aa" font-size="8.5" font-family="'Geist', sans-serif">Sync call</text>
+
+      <line x1="200" y1="560" x2="228" y2="560" stroke="#a1a1aa" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#wcp-seq-arrow)"/>
+      <text x="236" y="562" fill="#a1a1aa" font-size="8.5" font-family="'Geist', sans-serif">Return</text>
+
+      <line x1="330" y1="560" x2="358" y2="560" stroke="#34d399" stroke-width="1.4" marker-end="url(#wcp-seq-arrow-accent)"/>
+      <text x="366" y="562" fill="#a1a1aa" font-size="8.5" font-family="'Geist', sans-serif">Headline verdict</text>
+
+      <line x1="520" y1="560" x2="548" y2="560" stroke="#6f9fd8" stroke-width="1.2" marker-end="url(#wcp-seq-arrow-link)"/>
+      <text x="556" y="562" fill="#a1a1aa" font-size="8.5" font-family="'Geist', sans-serif">HTTP request</text>
+    </svg>
+    </div>
+  </div>
+</body>
+</html>

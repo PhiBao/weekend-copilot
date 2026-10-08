@@ -49,100 +49,17 @@ Jev may only return **typed judgments from a closed set** (never prose, never nu
 over committed data. Either key missing, either vendor down — the desk still grades, because the
 fallbacks are the original deterministic paths, not error pages.
 
-```mermaid
-flowchart TB
-    subgraph Client["Client — Next.js App Router"]
-        Desk["Desk.tsx<br/>book editor · NL box · graded cards"]
-    end
-    subgraph InEdge["Input edge — understanding"]
-        Dispatch["POST /api/dispatch"]
-        Regex["lib/nl.ts<br/>regex fast path · 0 ms"]
-        Jev(["TypeSafe Jev<br/>action + symbol + confidence"])
-    end
-    subgraph Core["Core — deterministic grading"]
-        Delta["POST /api/delta"]
-        Math["delta · stress · weekend drift<br/>breaker · audit · hedges · critic · policy"]
-        Receipts["receipts.ts<br/>hash-chained preregistration"]
-        Grave["graveyard.ts<br/>UNTESTED hypotheses"]
-    end
-    subgraph OutEdge["Output edge — narration"]
-        Explain["POST /api/explain"]
-        Lock["numberlock.ts<br/>refuse invented decimals"]
-        Qwen(["Qwen qwen3.8-max<br/>4 sentences · temp 0"])
-        Tmpl["deterministic template<br/>labeled fallback"]
-    end
-    subgraph Data["Data — pinned and keyless"]
-        Snap["snapshots + manifest SHAs<br/>12 symbols · committed"]
-        Live["live RSS · Bitget tickers<br/>30-min / 60-s caches"]
-        GH["weekly GitHub Action<br/>refresh · verify · commit"]
-    end
-    subgraph Proof["Proof — always inspectable"]
-        Verify["GET /api/verify<br/>7 checks"]
-        RVerify["POST /api/receipt/verify<br/>stateless + tamper demo"]
-        Log["data/paper_log.csv<br/>decisions + receipt hashes"]
-    end
-    Desk --> Dispatch
-    Dispatch --> Regex
-    Dispatch --> Jev
-    Regex --> Delta
-    Jev --> Delta
-    Delta --> Math
-    Math --> Receipts
-    Receipts --> Grave
-    Delta --> Desk
-    Desk --> Explain
-    Explain --> Lock
-    Lock --> Qwen
-    Lock --> Tmpl
-    Qwen --> Desk
-    Tmpl --> Desk
-    Snap --> Delta
-    Live --> Delta
-    GH --> Snap
-    Receipts --> Verify
-    Receipts --> RVerify
-    Receipts --> Log
-    classDef ai fill:#1c1917,stroke:#f59e0b,stroke-dasharray:5 5,color:#fcd34d;
-    classDef pure fill:#022c22,stroke:#34d399,color:#a7f3d0;
-    classDef io fill:#111827,stroke:#6b7280,color:#e5e7eb;
-    class Jev,Qwen ai;
-    class Math,Receipts,Lock pure;
-    class Desk,Dispatch,Delta,Explain,Snap,Live,GH,Verify,RVerify,Log,Regex,Grave,Tmpl io;
-```
+[![Weekend Copilot system architecture](docs/diagrams/architecture.png)](docs/diagrams/architecture.html)
 
-Dashed amber nodes are the only places a model runs. Everything emerald is pure code. If you
-removed every AI call, the desk would still grade — less fluently, but honestly.
+Vendor models run in exactly two places (Jev for intent, Qwen for narration — thin outlines).
+Everything else is first-party code; the emerald node is the thesis in one box: preregistered receipts.
+If you removed every AI call, the desk would still grade — less fluently, but honestly.
+Full-scale versions: [system architecture](docs/diagrams/architecture.html) ·
+[graded-trade sequence](docs/diagrams/sequence.html).
 
 ### One graded trade, end to end
 
-```mermaid
-sequenceDiagram
-    autonumber
-    participant T as Trader
-    participant UI as Desk UI
-    participant D as /api/dispatch
-    participant J as Jev
-    participant G as /api/delta
-    participant E as /api/explain
-    participant Q as Qwen
-    T->>UI: is Tesla safe to hold through the weekend
-    UI->>D: POST text + book
-    D->>D: regex fast path misses
-    D->>J: action + symbol Choice
-    J-->>D: hold_check 0.90, TSLA 0.95
-    D->>D: validate, scope probe to RTSLA
-    D-->>UI: proposal + interpretation chip
-    UI->>G: POST book + proposal
-    G->>G: delta, stress, drift, breaker, audit, hedges, critic
-    G->>G: preregister hash-chained receipt
-    G-->>UI: verdict + cards + receipt
-    UI->>E: POST receipt
-    E->>E: verify hash, check narration cache
-    E->>Q: narrate, 4 sentences, temp 0
-    Q-->>E: prose
-    E->>E: number-lock every decimal
-    E-->>UI: narration card
-```
+[![One graded trade, end to end](docs/diagrams/sequence.png)](docs/diagrams/sequence.html)
 
 ### Request lifecycle (matches the code, in order)
 
